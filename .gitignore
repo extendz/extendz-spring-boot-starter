@@ -11,6 +11,7 @@ target/
 
 ### VS Code
 .vscode
+.sts4-cache
 
 ### IntelliJ IDEA ###
 .idea
