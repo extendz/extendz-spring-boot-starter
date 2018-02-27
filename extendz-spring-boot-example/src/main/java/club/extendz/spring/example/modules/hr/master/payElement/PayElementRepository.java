@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package club.extendz.spring.example.modules.department;
+package club.extendz.spring.example.modules.hr.master.payElement;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
-
+/***
+ * @author Asitha Niranjan (asitha93@live.com)
+ */
 @Repository
-public interface DepartmentRepository extends PagingAndSortingRepository<Department, Long> {
+public interface PayElementRepository extends PagingAndSortingRepository<PayElement, Long> {
 
 }

@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package club.extendz.spring.example.modules.project;
+package club.extendz.spring.example.modules.hr.transaction.payrollProcess;
 
-import java.util.Set;
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,32 +27,36 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
-import club.extendz.spring.example.modules.department.Department;
-import club.extendz.spring.example.modules.employee.Employee;
+import club.extendz.spring.example.modules.hr.master.department.Department;
+import club.extendz.spring.example.modules.hr.master.location.Location;
 import lombok.Getter;
 import lombok.Setter;
-
+/***
+ * @author Asitha Niranjan (asitha93@live.com)
+ */
 @Entity
 @Getter
 @Setter
-public class Project {
-
+public class PayrollProcess {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@NotNull
-	private String name;
+	// payroll category
+	private String payrollMonth;
+	private Date processedDate;
+	// batch
 
 	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinTable(joinColumns = {
-			@JoinColumn(name = "project_id", referencedColumnName = "id", nullable = true) }, inverseJoinColumns = {
-					@JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = true) })
-	private Set<Employee> employees;
+			@JoinColumn(name = "payrollProcess_id", referencedColumnName = "id", nullable = true) }, inverseJoinColumns = {
+					@JoinColumn(name = "department_id", referencedColumnName = "id", nullable = true) })
+	private List<Department> departments;
 
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	private Department department;
+	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@JoinTable(joinColumns = {
+			@JoinColumn(name = "payrollProcess_id", referencedColumnName = "id", nullable = true) }, inverseJoinColumns = {
+					@JoinColumn(name = "location_id", referencedColumnName = "id", nullable = true) })
+	private List<Location> locations;
+	// employee
 }

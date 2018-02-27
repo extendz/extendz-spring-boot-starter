@@ -13,40 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package club.extendz.spring.example.modules.department;
+package club.extendz.spring.example.modules.hr.master.payElement;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 
-import club.extendz.spring.example.modules.employee.Employee;
-import club.extendz.spring.example.modules.project.Project;
+import club.extendz.spring.example.modules.hr.master.payElement.enums.PayElementType;
 import lombok.Getter;
 import lombok.Setter;
-
+/***
+ * @author Asitha Niranjan (asitha93@live.com)
+ */
 @Entity
 @Getter
 @Setter
-public class Department {
+public class PayElement {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@NotNull
-	private String name;
-
-	@OneToMany(mappedBy = "department", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	private Set<Project> projects;
-
-	@OneToMany(mappedBy = "department", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	private Set<Employee> employees;
-
+	private String description;
+	private PayElementType type;
+	private Boolean regular;
+	private String shortDescription;
+	// repotrt group field
 }

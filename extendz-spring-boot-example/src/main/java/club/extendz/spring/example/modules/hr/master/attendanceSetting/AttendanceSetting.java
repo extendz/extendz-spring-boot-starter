@@ -13,40 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package club.extendz.spring.example.modules.department;
+package club.extendz.spring.example.modules.hr.master.attendanceSetting;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 
-import club.extendz.spring.example.modules.employee.Employee;
-import club.extendz.spring.example.modules.project.Project;
+import club.extendz.spring.example.modules.hr.master.attendanceSetting.enums.PayType;
 import lombok.Getter;
 import lombok.Setter;
 
+/***
+ * @author Asitha Niranjan (asitha93@live.com)
+ */
 @Entity
 @Getter
 @Setter
-public class Department {
-
+public class AttendanceSetting {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@NotNull
-	private String name;
-
-	@OneToMany(mappedBy = "department", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	private Set<Project> projects;
-
-	@OneToMany(mappedBy = "department", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	private Set<Employee> employees;
+	// attendance type field
+	private PayType payType;
+	private Boolean overtimeEligible;
+	private Float normalHoursPerDay;
+	private Float maximumHoursPerday;
+	private Float normalOvertimeRate;
+	private Float holidayOvertimeRate;
+	private Float specialOvertimeRate;
+	private Float maximumOvertimeAmount;
+	private Float optimumRateMultiplier;
+	private Float optimumRateDivisor;
+	private Float overtimeRateMultiplier;
+	private Float overtimeRateDivisor;
 
 }

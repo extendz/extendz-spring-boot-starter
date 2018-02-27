@@ -13,12 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package club.extendz.spring.example.modules.department;
+package club.extendz.spring.example.modules.hr.master.payCategory;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-@Repository
-public interface DepartmentRepository extends PagingAndSortingRepository<Department, Long> {
-
+import club.extendz.spring.example.modules.hr.master.payCategory.enums.PayCategoryName;
+import lombok.Getter;
+import lombok.Setter;
+/***
+ * @author Asitha Niranjan (asitha93@live.com)
+ */
+@Entity
+@Getter
+@Setter
+public class PayCategory {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private PayCategoryName name;
 }

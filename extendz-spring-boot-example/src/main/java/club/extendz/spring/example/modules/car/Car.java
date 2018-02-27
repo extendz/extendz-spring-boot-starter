@@ -17,10 +17,16 @@ package club.extendz.spring.example.modules.car;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
+import club.extendz.spring.example.modules.car.enums.Brand;
 import club.extendz.spring.example.modules.employee.Employee;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,10 +37,15 @@ import lombok.Setter;
 public class Car {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
+	@NotNull
 	private String registrationNumber;
 
-	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)	
+	@Enumerated(EnumType.STRING)
+	private Brand brand;
+
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Employee user;
 }

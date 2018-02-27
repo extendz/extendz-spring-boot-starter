@@ -13,56 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package club.extendz.spring.example.modules.employee;
+package club.extendz.spring.example.modules.hr.master.department;
 
-import java.util.Date;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Email;
-
-import club.extendz.spring.example.modules.car.Car;
-import club.extendz.spring.example.modules.department.Department;
 import lombok.Getter;
 import lombok.Setter;
 
+/***
+ * @author Asitha Niranjan (asitha93@live.com)
+ */
 @Entity
 @Getter
 @Setter
-public class Employee {
+public class Department {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String name;
-
-	@NotNull
-	@Email
-	private String email;
-
-	private double Salary;
-
-	@Temporal(TemporalType.DATE)
-	private Date joinDate;
-
-	@OneToOne(mappedBy = "user", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	private Car companyCar;
-
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	private Department department;
 
 }

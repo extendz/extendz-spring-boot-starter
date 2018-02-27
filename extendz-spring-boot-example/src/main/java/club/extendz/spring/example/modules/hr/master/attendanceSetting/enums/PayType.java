@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package club.extendz.spring.example.modules.department;
+package club.extendz.spring.example.modules.hr.master.attendanceSetting.enums;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public interface DepartmentRepository extends PagingAndSortingRepository<Department, Long> {
-
+/***
+ * @author Asitha Niranjan (asitha93@live.com)
+ */
+public enum PayType {
+	MONTHLY, DAILY
 }

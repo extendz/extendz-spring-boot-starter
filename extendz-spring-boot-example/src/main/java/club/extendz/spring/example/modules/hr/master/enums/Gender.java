@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package club.extendz.spring.example.modules.department;
-
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public interface DepartmentRepository extends PagingAndSortingRepository<Department, Long> {
-
+package club.extendz.spring.example.modules.hr.master.enums;
+/***
+ * @author Asitha Niranjan (asitha93@live.com)
+ */
+public enum Gender {
+	M, F
 }
