@@ -32,7 +32,7 @@ public class Location {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long ig;
+	private Long id;
 
 	private String locationName;
 }

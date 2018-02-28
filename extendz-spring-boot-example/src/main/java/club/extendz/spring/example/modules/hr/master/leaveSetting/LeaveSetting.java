@@ -17,14 +17,19 @@ package club.extendz.spring.example.modules.hr.master.leaveSetting;
 
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 
 import club.extendz.spring.example.modules.hr.master.enums.Day;
 import lombok.Getter;
 import lombok.Setter;
+
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */
@@ -43,11 +48,17 @@ public class LeaveSetting {
 	private Float perDaySalaryMultiplier;
 	private Float perDaySalaryDivisor;
 	// annual leave eligibility service
+	@ElementCollection(targetClass = Day.class)
+	@CollectionTable(name = "leaveSetting_eligibleDays", joinColumns = @JoinColumn(name = "leaveSetting_id"))
+	@Column(name = "day_id")
 	private Set<Day> eligibleDays;
 	private Boolean grayuityServiceRequired;
 	private Float perDaySalaryDivisorForGratuity;
 	private Boolean proportionalEligibility;
 	// service required for gratuity
+	@ElementCollection(targetClass = Day.class)
+	@CollectionTable(name = "leaveSetting_ligibleDaysForGratuity", joinColumns = @JoinColumn(name = "leaveSetting_id"))
+	@Column(name = "day_id")
 	private Set<Day> eligibleDaysForGratuity;
 
 }

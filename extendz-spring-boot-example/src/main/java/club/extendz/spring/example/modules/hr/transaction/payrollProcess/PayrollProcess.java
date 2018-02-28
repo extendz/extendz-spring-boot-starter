@@ -16,7 +16,7 @@
 package club.extendz.spring.example.modules.hr.transaction.payrollProcess;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -32,6 +32,7 @@ import club.extendz.spring.example.modules.hr.master.department.Department;
 import club.extendz.spring.example.modules.hr.master.location.Location;
 import lombok.Getter;
 import lombok.Setter;
+
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */
@@ -51,12 +52,12 @@ public class PayrollProcess {
 	@JoinTable(joinColumns = {
 			@JoinColumn(name = "payrollProcess_id", referencedColumnName = "id", nullable = true) }, inverseJoinColumns = {
 					@JoinColumn(name = "department_id", referencedColumnName = "id", nullable = true) })
-	private List<Department> departments;
+	private Set<Department> departments;
 
 	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinTable(joinColumns = {
 			@JoinColumn(name = "payrollProcess_id", referencedColumnName = "id", nullable = true) }, inverseJoinColumns = {
 					@JoinColumn(name = "location_id", referencedColumnName = "id", nullable = true) })
-	private List<Location> locations;
+	private Set<Location> locations;
 	// employee
 }

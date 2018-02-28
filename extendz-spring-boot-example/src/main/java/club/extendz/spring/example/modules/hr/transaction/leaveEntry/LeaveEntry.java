@@ -21,12 +21,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import club.extendz.spring.example.modules.hr.master.leaveType.LeaveType;
 import lombok.Getter;
 import lombok.Setter;
+
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */
@@ -42,6 +44,7 @@ public class LeaveEntry {
 	@Temporal(TemporalType.DATE)
 	private Date leaveAppliedDate;
 	private Long emplyeeNumber;
+	@OneToOne
 	private LeaveType leaveType;
 	@Temporal(TemporalType.DATE)
 	private Date fromDate;

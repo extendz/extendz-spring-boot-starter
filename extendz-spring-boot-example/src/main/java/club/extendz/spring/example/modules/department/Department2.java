@@ -34,7 +34,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Department {
+public class Department2 {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,10 +43,10 @@ public class Department {
 	@NotNull
 	private String name;
 
-	@OneToMany(mappedBy = "department", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "department2", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Set<Project> projects;
 
-	@OneToMany(mappedBy = "department", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "department2", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Set<Employee> employees;
 
 }

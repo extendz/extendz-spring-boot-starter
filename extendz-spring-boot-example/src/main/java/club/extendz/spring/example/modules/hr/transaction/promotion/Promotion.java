@@ -16,6 +16,7 @@
 package club.extendz.spring.example.modules.hr.transaction.promotion;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,6 +27,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 import club.extendz.spring.example.modules.hr.master.attendanceSetting.AttendanceSetting;
 import club.extendz.spring.example.modules.hr.master.department.Department;
@@ -33,6 +35,7 @@ import club.extendz.spring.example.modules.hr.master.leaveSetting.LeaveSetting;
 import club.extendz.spring.example.modules.hr.master.payCategory.PayCategory;
 import lombok.Getter;
 import lombok.Setter;
+
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */
@@ -51,16 +54,18 @@ public class Promotion {
 	@JoinTable(joinColumns = {
 			@JoinColumn(name = "promotion_id", referencedColumnName = "id", nullable = true) }, inverseJoinColumns = {
 					@JoinColumn(name = "payCategory_id", referencedColumnName = "id", nullable = true) })
-	private PayCategory payCategorys;
+	private Set<PayCategory> payCategorys;
 
 	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinTable(joinColumns = {
 			@JoinColumn(name = "promotion_id", referencedColumnName = "id", nullable = true) }, inverseJoinColumns = {
 					@JoinColumn(name = "department_id", referencedColumnName = "id", nullable = true) })
-	private Department departments;
+	private Set<Department> departments;
 	// grade
 	private String designation;
+	@OneToOne
 	private LeaveSetting leaveSetting;
+	@OneToOne
 	private AttendanceSetting attendanceSetting;
 	private Integer numberOfannualAirTicketsEligible;
 	private Integer numberOfannualAirTicketsEligibleForFamily;

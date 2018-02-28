@@ -29,7 +29,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import club.extendz.spring.example.modules.department.Department;
+import club.extendz.spring.example.modules.department.Department2;
 import club.extendz.spring.example.modules.employee.Employee;
 import lombok.Getter;
 import lombok.Setter;
@@ -53,5 +53,5 @@ public class Project {
 	private Set<Employee> employees;
 
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	private Department department;
+	private Department2 department2;
 }

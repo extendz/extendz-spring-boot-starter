@@ -33,7 +33,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 
 import club.extendz.spring.example.modules.car.Car;
-import club.extendz.spring.example.modules.department.Department;
+import club.extendz.spring.example.modules.department.Department2;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -63,6 +63,6 @@ public class Employee {
 	private Car companyCar;
 
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	private Department department;
+	private Department2 department2;
 
 }
