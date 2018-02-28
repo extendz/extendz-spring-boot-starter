@@ -17,16 +17,21 @@ package club.extendz.spring.example.modules.hr.transaction.employeeAbsconded;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import club.extendz.spring.example.modules.hr.master.employee.Employee;
 import club.extendz.spring.example.modules.hr.transaction.employeeAbsconded.enums.AbscondedStatus;
 import lombok.Getter;
 import lombok.Setter;
+
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */
@@ -40,7 +45,10 @@ public class EmployeeAbsconded {
 	private Long voucherNumber;
 	@Temporal(TemporalType.DATE)
 	private Date date;
-	private Long employeeNumber;
+	
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private Employee employee;
+	
 	@Temporal(TemporalType.DATE)
 	private Date abscondedDate;
 	@Temporal(TemporalType.DATE)

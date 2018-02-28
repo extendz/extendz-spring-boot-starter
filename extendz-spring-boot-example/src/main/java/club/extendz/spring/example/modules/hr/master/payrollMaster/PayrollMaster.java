@@ -17,7 +17,9 @@ package club.extendz.spring.example.modules.hr.master.payrollMaster;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,8 +44,10 @@ public class PayrollMaster {
 	private String description;
 	@Temporal(TemporalType.DATE)
 	private Date payrollDate;
-	@OneToOne
+	
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private PayCategory paycatgory;
+	
 	@Temporal(TemporalType.DATE)
 	private Date fromDate;
 	@Temporal(TemporalType.DATE)

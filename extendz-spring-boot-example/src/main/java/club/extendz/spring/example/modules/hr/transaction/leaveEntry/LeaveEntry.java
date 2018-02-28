@@ -17,7 +17,9 @@ package club.extendz.spring.example.modules.hr.transaction.leaveEntry;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,6 +27,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import club.extendz.spring.example.modules.hr.master.employee.Employee;
 import club.extendz.spring.example.modules.hr.master.leaveType.LeaveType;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,9 +46,13 @@ public class LeaveEntry {
 	private Long voucherNumber;
 	@Temporal(TemporalType.DATE)
 	private Date leaveAppliedDate;
-	private Long emplyeeNumber;
-	@OneToOne
+	
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private Employee employee;
+	
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private LeaveType leaveType;
+	
 	@Temporal(TemporalType.DATE)
 	private Date fromDate;
 	@Temporal(TemporalType.DATE)

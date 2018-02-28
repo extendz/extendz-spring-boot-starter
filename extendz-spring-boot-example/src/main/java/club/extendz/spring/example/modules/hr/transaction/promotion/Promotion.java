@@ -31,6 +31,8 @@ import javax.persistence.OneToOne;
 
 import club.extendz.spring.example.modules.hr.master.attendanceSetting.AttendanceSetting;
 import club.extendz.spring.example.modules.hr.master.department.Department;
+import club.extendz.spring.example.modules.hr.master.employee.Employee;
+import club.extendz.spring.example.modules.hr.master.jobTitle.JobTitle;
 import club.extendz.spring.example.modules.hr.master.leaveSetting.LeaveSetting;
 import club.extendz.spring.example.modules.hr.master.payCategory.PayCategory;
 import lombok.Getter;
@@ -47,7 +49,10 @@ public class Promotion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long voucherNumber;
-	private Long emplyeeNumber;
+
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private Employee employee;
+
 	private Date entryDate;
 
 	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
@@ -61,12 +66,18 @@ public class Promotion {
 			@JoinColumn(name = "promotion_id", referencedColumnName = "id", nullable = true) }, inverseJoinColumns = {
 					@JoinColumn(name = "department_id", referencedColumnName = "id", nullable = true) })
 	private Set<Department> departments;
+
 	// grade
-	private String designation;
-	@OneToOne
+
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private JobTitle designation;
+
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private LeaveSetting leaveSetting;
-	@OneToOne
+
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private AttendanceSetting attendanceSetting;
+
 	private Integer numberOfannualAirTicketsEligible;
 	private Integer numberOfannualAirTicketsEligibleForFamily;
 	private Boolean companyOccommodation;

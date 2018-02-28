@@ -17,13 +17,17 @@ package club.extendz.spring.example.modules.hr.transaction.dutyResume;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import club.extendz.spring.example.modules.hr.master.employee.Employee;
 import lombok.Getter;
 import lombok.Setter;
 /***
@@ -37,7 +41,10 @@ public class DutyResume {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long employeeNumber;
+	
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private Employee employee;
+	
 	@Temporal(TemporalType.DATE)
 	private Date arrivalDate;
 	@Temporal(TemporalType.DATE)

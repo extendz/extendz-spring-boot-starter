@@ -17,15 +17,20 @@ package club.extendz.spring.example.modules.hr.transaction.employeeTrainig;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import club.extendz.spring.example.modules.hr.master.location.Location;
 import lombok.Getter;
 import lombok.Setter;
+
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */
@@ -44,7 +49,10 @@ public class EmployeeTaining {
 	@Temporal(TemporalType.DATE)
 	private Date toDate;
 	private Float durationInHours;
-	// location
+	
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private Location location;
+	
 	// instructor
 	// ctc
 

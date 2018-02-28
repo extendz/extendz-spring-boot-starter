@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package club.extendz.spring.example.modules.hr.master.employeeMaster;
+package club.extendz.spring.example.modules.hr.transaction.oneTimeAllowance;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -21,6 +21,6 @@ import org.springframework.stereotype.Repository;
  * @author Asitha Niranjan (asitha93@live.com)
  */
 @Repository
-public interface EmployeeMasterRepository extends PagingAndSortingRepository<EmployeeMaster, Long> {
+public interface OneTimeAllowanceRepository extends PagingAndSortingRepository<OneTimeAllowance, Long> {
 
 }

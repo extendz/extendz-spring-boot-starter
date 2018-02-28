@@ -13,17 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package club.extendz.spring.example.modules.hr.transaction.overtimeAllowance;
+package club.extendz.spring.example.modules.hr.transaction.oneTimeAllowance;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import club.extendz.spring.example.modules.hr.master.employee.Employee;
 import lombok.Getter;
 import lombok.Setter;
 /***
@@ -32,11 +36,14 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class OvertimeAllowance {
+public class OneTimeAllowance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long employeeNumber;
+	
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private Employee employee;
+	
 	@Temporal(TemporalType.DATE)
 	private Date date;
 	private String payrollMonth;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package club.extendz.spring.example.modules.hr.master.employeeMaster;
+package club.extendz.spring.example.modules.hr.master.employee;
 
 import java.util.Date;
 
@@ -34,7 +34,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class EmployeeMaster {
+public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;

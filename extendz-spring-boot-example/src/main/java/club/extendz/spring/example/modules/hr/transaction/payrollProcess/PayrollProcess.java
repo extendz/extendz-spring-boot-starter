@@ -27,8 +27,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import club.extendz.spring.example.modules.hr.master.department.Department;
+import club.extendz.spring.example.modules.hr.master.employee.Employee;
 import club.extendz.spring.example.modules.hr.master.location.Location;
 import lombok.Getter;
 import lombok.Setter;
@@ -59,5 +61,7 @@ public class PayrollProcess {
 			@JoinColumn(name = "payrollProcess_id", referencedColumnName = "id", nullable = true) }, inverseJoinColumns = {
 					@JoinColumn(name = "location_id", referencedColumnName = "id", nullable = true) })
 	private Set<Location> locations;
-	// employee
+
+	@OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private Set<Employee> employees;
 }
