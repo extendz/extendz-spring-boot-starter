@@ -44,7 +44,7 @@ public class ExtendzSpringBootExampleApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				if (Arrays.toString(environment.getActiveProfiles()).contains("prod")) {
-					registry.addMapping("/api/**").allowedOrigins("https://extendz-springboot.herokuapp.com");
+					registry.addMapping("/api/**").allowedOrigins("https://extendz.github.io");
 				} else {
 					registry.addMapping("/api/**").allowedOrigins("http://localhost:4200");
 				}
