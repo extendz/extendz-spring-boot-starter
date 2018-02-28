@@ -90,7 +90,7 @@ public class ModelService {
 			Class<?> domainType = resourceMapping.getDomainType();
 			String domainClassName = domainType.getSimpleName();
 
-			String url = basePath + resourceMapping.getPath();
+			String url = resourceMapping.getPath().toString();
 
 			Model model = new Model(domainClassName, url);
 			basicModelsMap.add(SerializationUtils.clone(model));
