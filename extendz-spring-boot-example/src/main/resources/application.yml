@@ -1,3 +1,5 @@
+server:
+  port: 8081
 logging:
   level:
     org.springframework: info
@@ -5,5 +7,19 @@ spring:
   data:
     rest:
       base-path: /api
+  datasource:
+    url: jdbc:mysql://localhost/test123?useSSL=false
+    username: root
+    password: password
+    dbcp2:
+      validation-query: SELECT 1
+      test-on-borrow: true
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect  
 extendz:
   model-meta-endpoint: ${spring.data.rest.base-path}/models
