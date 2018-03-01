@@ -19,11 +19,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.test.context.ActiveProfiles;
 
+import club.extendz.spring.example.modules.utils.ProfileUtils;
+
 @SpringBootApplication(scanBasePackages = "club.extendz")
 @ActiveProfiles()
 public class ExtendzSpringBootExampleApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ExtendzSpringBootExampleApplication.class, args);
+		// SpringApplication.run(ExtendzSpringBootExampleApplication.class, args);
+		SpringApplication app = new SpringApplication(ExtendzSpringBootExampleApplication.class);
+		// Change the default profile to "dev" instead of "default".
+		ProfileUtils.setAsDev(app);
+		app.run(args);
+
 	}
 }
