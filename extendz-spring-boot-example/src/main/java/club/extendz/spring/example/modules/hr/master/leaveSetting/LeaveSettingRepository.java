@@ -15,12 +15,22 @@
  */
 package club.extendz.spring.example.modules.hr.master.leaveSetting;
 
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
+import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+
+import com.querydsl.core.types.dsl.StringPath;
+
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */
 @Repository
-public interface LeaveSettingRepository extends PagingAndSortingRepository<LeaveSetting, Long> {
-
+public interface LeaveSettingRepository extends PagingAndSortingRepository<LeaveSetting, Long>,
+		QueryDslPredicateExecutor<LeaveSetting>, QuerydslBinderCustomizer<QLeaveSetting> {
+	@Override
+	default void customize(QuerydslBindings bindings, QLeaveSetting leaveSetting) {
+		bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
+	}
 }

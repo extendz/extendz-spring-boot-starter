@@ -1,0 +1,26 @@
+logging:
+  level:
+    org.springframework: info
+server:
+  port: 8081
+spring:
+  profiles:
+    active:
+    - prod
+  datasource:
+    url: jdbc:mysql://localhost/test123?useSSL=false
+    username: root
+    password: password
+    validation-query: SELECT 1  
+    test-on-borrow: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect:org.hibernate.dialect.MySQL5Dialect      
+  data:
+    rest:
+      base-path: /api
+extendz:
+  model-meta-endpoint: ${spring.data.rest.base-path}/models

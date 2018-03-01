@@ -42,10 +42,10 @@ public class AttendanceEntry {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Set<Employee> employees;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date date;
 	private String payrollMonth;

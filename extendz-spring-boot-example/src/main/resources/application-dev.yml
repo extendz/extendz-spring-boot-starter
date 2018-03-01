@@ -1,0 +1,12 @@
+logging:
+  level:
+    org.springframework: info
+spring:
+  profiles:
+    active:
+    - dev
+  data:
+    rest:
+      base-path: /api
+extendz:
+  model-meta-endpoint: ${spring.data.rest.base-path}/models

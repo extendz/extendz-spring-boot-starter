@@ -15,12 +15,22 @@
  */
 package club.extendz.spring.example.modules.hr.transaction.leaveReimbursement;
 
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
+import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+
+import com.querydsl.core.types.dsl.StringPath;
+
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */
 @Repository
-public interface LeaveReimbursementRepository extends PagingAndSortingRepository<LeaveReimbursement, Long> {
-
+public interface LeaveReimbursementRepository extends PagingAndSortingRepository<LeaveReimbursement, Long>,
+		QueryDslPredicateExecutor<LeaveReimbursement>, QuerydslBinderCustomizer<QLeaveReimbursement> {
+	@Override
+	default void customize(QuerydslBindings bindings, QLeaveReimbursement leaveReimbursement) {
+		bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
+	}
 }

@@ -15,12 +15,22 @@
  */
 package club.extendz.spring.example.modules.hr.transaction.leaveAndFinalSettlment;
 
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
+import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+
+import com.querydsl.core.types.dsl.StringPath;
+
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */
 @Repository
-public interface LeaveAndFinalSettlmentRepository extends PagingAndSortingRepository<LeaveAndFinalSettlment, Long> {
-
+public interface LeaveAndFinalSettlmentRepository extends PagingAndSortingRepository<LeaveAndFinalSettlment, Long>,
+		QueryDslPredicateExecutor<LeaveAndFinalSettlment>, QuerydslBinderCustomizer<QLeaveAndFinalSettlment> {
+	@Override
+	default void customize(QuerydslBindings bindings, QLeaveAndFinalSettlment leaveAndFinalSettlment) {
+		bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
+	}
 }
