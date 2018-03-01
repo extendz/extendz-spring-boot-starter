@@ -33,4 +33,14 @@ public class ExtendzSpringBootExampleApplication {
 		app.run(args);
 
 	}
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurerAdapter() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/api/**").allowedOrigins("https://extendz.github.io", "http://localhost:4200");
+			}
+		};
+	} // corsConfigurer
 }

@@ -8,5 +8,6 @@ spring:
   data:
     rest:
       base-path: /api
+      
 extendz:
   model-meta-endpoint: ${spring.data.rest.base-path}/models
