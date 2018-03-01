@@ -92,7 +92,7 @@ public class ModelService {
 
 			String url = resourceMapping.getPath().toString();
 
-			Model model = new Model(domainClassName, url);
+			Model model = new Model(domainClassName.toLowerCase(), url);
 			basicModelsMap.add(SerializationUtils.clone(model));
 
 			// add Properties

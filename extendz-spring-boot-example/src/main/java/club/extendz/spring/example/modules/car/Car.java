@@ -18,6 +18,8 @@ package club.extendz.spring.example.modules.car;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -31,10 +33,11 @@ import lombok.Setter;
 public class Car {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String registrationNumber;
 
-	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)	
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Employee user;
 }
