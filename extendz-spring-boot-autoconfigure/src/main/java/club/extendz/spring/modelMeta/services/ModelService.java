@@ -37,6 +37,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.SerializationUtils;
+import org.apache.commons.lang3.text.WordUtils;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 import org.springframework.stereotype.Service;
 
@@ -91,8 +92,9 @@ public class ModelService {
 			String domainClassName = domainType.getSimpleName();
 
 			String url = resourceMapping.getPath().toString();
-
-			Model model = new Model(domainClassName.toLowerCase(), url);
+			
+			String name = WordUtils.uncapitalize(domainClassName);
+			Model model = new Model(name, url);
 			basicModelsMap.add(SerializationUtils.clone(model));
 
 			// add Properties
