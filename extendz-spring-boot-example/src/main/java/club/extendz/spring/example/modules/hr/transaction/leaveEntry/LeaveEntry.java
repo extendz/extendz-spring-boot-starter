@@ -46,13 +46,13 @@ public class LeaveEntry {
 	private Long voucherNumber;
 	@Temporal(TemporalType.DATE)
 	private Date leaveAppliedDate;
-	
+
 	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Employee employee;
-	
+
 	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private LeaveType leaveType;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date fromDate;
 	@Temporal(TemporalType.DATE)

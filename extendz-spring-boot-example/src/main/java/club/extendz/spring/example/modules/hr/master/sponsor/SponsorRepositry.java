@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package club.extendz.spring.example.modules.hr.master.payrollMaster;
+package club.extendz.spring.example.modules.hr.master.sponsor;
 
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
@@ -27,10 +27,10 @@ import com.querydsl.core.types.dsl.StringPath;
  * @author Asitha Niranjan (asitha93@live.com)
  */
 @Repository
-public interface PayrollMasterRepository extends PagingAndSortingRepository<PayrollMaster, Long>,
-		QueryDslPredicateExecutor<PayrollMaster>, QuerydslBinderCustomizer<QPayrollMaster> {
+public interface SponsorRepositry extends PagingAndSortingRepository<Sponsor, Long>, QueryDslPredicateExecutor<Sponsor>,
+		QuerydslBinderCustomizer<QSponsor> {
 	@Override
-	default void customize(QuerydslBindings bindings, QPayrollMaster payrollMaster) {
+	default void customize(QuerydslBindings bindings, QSponsor sponsor) {
 		bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
 	}
 }

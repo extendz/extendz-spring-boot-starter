@@ -37,11 +37,11 @@ import lombok.Setter;
 public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long Id;
+	private Long id;
 	// employee profile
 	private Long employeeNumber;
 	@Temporal(TemporalType.DATE)
-	private Date JoinDate;
+	private Date joinDate;
 	@Temporal(TemporalType.DATE)
 	private Date dateOfBirth;
 	private String nationality;
@@ -55,7 +55,7 @@ public class Employee {
 	// IBAN
 	private String bankName;
 	// beneficiary information
-	private String Address;
+	private String address;
 
 	// ******qualifications & experience
 

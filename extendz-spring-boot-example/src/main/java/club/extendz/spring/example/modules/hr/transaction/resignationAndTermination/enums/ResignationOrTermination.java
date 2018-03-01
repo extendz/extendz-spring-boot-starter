@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package club.extendz.spring.example.modules.hr.transaction.resignationAndTermination.enums;
+
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */

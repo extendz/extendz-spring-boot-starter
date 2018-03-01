@@ -49,10 +49,10 @@ public class EmployeeTaining {
 	@Temporal(TemporalType.DATE)
 	private Date toDate;
 	private Float durationInHours;
-	
+
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Location location;
-	
+
 	// instructor
 	// ctc
 

@@ -22,6 +22,7 @@ import javax.persistence.Id;
 
 import lombok.Getter;
 import lombok.Setter;
+
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */
@@ -32,6 +33,6 @@ public class JobTitle {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String description;
 }

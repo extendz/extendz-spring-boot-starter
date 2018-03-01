@@ -13,24 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package club.extendz.spring.example.modules.hr.master.sponsorMaster;
+package club.extendz.spring.example.modules.hr.master.payroll;
 
+import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import club.extendz.spring.example.modules.hr.master.payCategory.PayCategory;
 import lombok.Getter;
 import lombok.Setter;
+
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */
 @Entity
 @Getter
 @Setter
-public class SponsorMaster {
+public class Payroll {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
+	private String description;
+	@Temporal(TemporalType.DATE)
+	private Date payrollDate;
+
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private PayCategory paycatgory;
+
+	@Temporal(TemporalType.DATE)
+	private Date fromDate;
+	@Temporal(TemporalType.DATE)
+	private Date toDate;
 }

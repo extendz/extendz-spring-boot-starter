@@ -45,10 +45,10 @@ public class EmployeeAbsconded {
 	private Long voucherNumber;
 	@Temporal(TemporalType.DATE)
 	private Date date;
-	
+
 	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Employee employee;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date abscondedDate;
 	@Temporal(TemporalType.DATE)

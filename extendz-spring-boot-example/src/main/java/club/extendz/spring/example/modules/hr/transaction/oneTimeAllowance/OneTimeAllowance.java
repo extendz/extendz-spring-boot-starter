@@ -30,6 +30,7 @@ import javax.persistence.TemporalType;
 import club.extendz.spring.example.modules.hr.master.employee.Employee;
 import lombok.Getter;
 import lombok.Setter;
+
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */
@@ -40,10 +41,10 @@ public class OneTimeAllowance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Employee employee;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date date;
 	private String payrollMonth;

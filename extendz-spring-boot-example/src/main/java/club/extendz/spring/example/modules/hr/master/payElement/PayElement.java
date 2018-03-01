@@ -23,6 +23,7 @@ import javax.persistence.Id;
 import club.extendz.spring.example.modules.hr.master.payElement.enums.PayElementType;
 import lombok.Getter;
 import lombok.Setter;
+
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */
