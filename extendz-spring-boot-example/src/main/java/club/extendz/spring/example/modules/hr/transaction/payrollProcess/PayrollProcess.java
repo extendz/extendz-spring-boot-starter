@@ -28,6 +28,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import club.extendz.spring.example.modules.hr.master.department.Department;
 import club.extendz.spring.example.modules.hr.master.employee.Employee;
@@ -46,7 +48,9 @@ public class PayrollProcess {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	// payroll category
-	private String payrollMonth;
+	@Temporal(TemporalType.DATE)
+	private Date payrollMonth;
+	@Temporal(TemporalType.DATE)
 	private Date processedDate;
 	// batch
 

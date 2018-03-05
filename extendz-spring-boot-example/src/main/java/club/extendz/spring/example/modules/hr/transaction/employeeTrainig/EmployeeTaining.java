@@ -42,6 +42,7 @@ public class EmployeeTaining {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long voucherNumber;
+	@Temporal(TemporalType.DATE)
 	private Date date;
 	private String descriptonOfTraining;
 	@Temporal(TemporalType.DATE)

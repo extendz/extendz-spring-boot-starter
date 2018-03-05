@@ -28,6 +28,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import club.extendz.spring.example.modules.hr.master.attendanceSetting.AttendanceSetting;
 import club.extendz.spring.example.modules.hr.master.department.Department;
@@ -52,7 +54,7 @@ public class Promotion {
 
 	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Employee employee;
-
+	@Temporal(TemporalType.DATE)
 	private Date entryDate;
 
 	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
@@ -83,6 +85,7 @@ public class Promotion {
 	private Boolean companyOccommodation;
 	private Boolean companyCar;
 	private String remarks;
+	@Temporal(TemporalType.DATE)
 	private Date effectiveDate;
 
 }

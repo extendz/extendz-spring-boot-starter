@@ -19,6 +19,8 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -55,6 +57,7 @@ public class EmployeeAbsconded {
 	private Date caughtDate;
 	@Temporal(TemporalType.DATE)
 	private Date reportedDate;
+	@Enumerated(EnumType.STRING)
 	private AbscondedStatus status;
 	@Temporal(TemporalType.DATE)
 	private Date lastWorkingDate;

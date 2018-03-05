@@ -49,5 +49,6 @@ public class LeaveReimbursement {
 	@Temporal(TemporalType.DATE)
 	private Date date;
 	private String remarks;
+	@Temporal(TemporalType.DATE)
 	private Date effectiveDate;
 }

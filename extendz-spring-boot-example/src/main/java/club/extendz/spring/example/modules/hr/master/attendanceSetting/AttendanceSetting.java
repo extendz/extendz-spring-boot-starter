@@ -16,6 +16,8 @@
 package club.extendz.spring.example.modules.hr.master.attendanceSetting;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,6 +37,7 @@ public class AttendanceSetting {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	// attendance type field
+	@Enumerated(EnumType.STRING)
 	private PayType payType;
 	private Boolean overtimeEligible;
 	private Float normalHoursPerDay;

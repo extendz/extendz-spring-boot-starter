@@ -19,6 +19,8 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -50,6 +52,7 @@ public class ResignationAndTermination {
 	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Employee employee;
 
+	@Enumerated(EnumType.STRING)
 	private ResignationOrTermination type;
 	@Temporal(TemporalType.DATE)
 	private Date effectiveDate;

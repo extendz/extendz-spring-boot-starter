@@ -18,6 +18,8 @@ package club.extendz.spring.example.modules.hr.master.employee;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,6 +47,7 @@ public class Employee {
 	@Temporal(TemporalType.DATE)
 	private Date dateOfBirth;
 	private String nationality;
+	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	private String bloodGroup;
 	private String passportNumber;
