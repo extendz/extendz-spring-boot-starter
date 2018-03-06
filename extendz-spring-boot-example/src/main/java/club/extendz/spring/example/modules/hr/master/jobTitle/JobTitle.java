@@ -15,6 +15,8 @@
  */
 package club.extendz.spring.example.modules.hr.master.jobTitle;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,4 +37,8 @@ public class JobTitle {
 	private Long id;
 
 	private String description;
+	
+	private Date date;
+	
+	private String name;
 }

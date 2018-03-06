@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = "dev")
+@ActiveProfiles(profiles = "test")
 public class ExtendzSpringBootExampleApplicationTests {
 
 	@Test

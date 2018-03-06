@@ -1,0 +1,14 @@
+logging:
+  level:
+    org.springframework: info
+server:
+  port: 8081
+spring:
+  data:
+    rest:
+      base-path: /api
+  profiles:
+    active:
+    - prod       
+extendz:
+  model-meta-endpoint: ${spring.data.rest.base-path}/models

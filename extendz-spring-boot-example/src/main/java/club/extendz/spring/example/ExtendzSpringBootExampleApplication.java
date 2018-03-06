@@ -28,7 +28,8 @@ import club.extendz.spring.example.modules.utils.ProfileUtils;
 public class ExtendzSpringBootExampleApplication {
 
 	public static void main(String[] args) {
-		// SpringApplication.run(ExtendzSpringBootExampleApplication.class, args);
+		// SpringApplication.run(ExtendzSpringBootExampleApplication.class,
+		// args);
 		SpringApplication app = new SpringApplication(ExtendzSpringBootExampleApplication.class);
 		// Change the default profile to "dev" instead of "default".
 		ProfileUtils.setAsDev(app);
@@ -41,7 +42,8 @@ public class ExtendzSpringBootExampleApplication {
 		return new WebMvcConfigurerAdapter() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/api/**").allowedOrigins("https://extendz.github.io", "http://localhost:4200");
+				registry.addMapping("/api/**").allowedOrigins("https://extendz.github.io", "http://localhost:4200")
+						.allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS").allowedHeaders("*");
 			}
 		};
 	} // corsConfigurer

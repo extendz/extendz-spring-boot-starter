@@ -15,7 +15,7 @@ public class GlobalRepositoryRestConfigurer extends RepositoryRestConfigurerAdap
 
 	@Override
 	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-		config.getCorsRegistry().addMapping("/api/**").allowedOrigins("*");
+		config.getCorsRegistry().addMapping("/api/**").allowedOrigins("*").allowedMethods("*");
 	}
 
 }
