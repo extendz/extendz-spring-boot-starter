@@ -42,6 +42,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import club.extendz.spring.modelMeta.annotations.Extendz;
 import club.extendz.spring.modelMeta.annotations.enums.InputType;
 import club.extendz.spring.modelMeta.models.utils.Model;
 import club.extendz.spring.modelMeta.models.utils.Projection;
@@ -314,6 +315,13 @@ public class ModelService {
 				e.printStackTrace();
 			}
 			property.setIggnoreOnRead(true);
+		}
+
+		// Extendz
+		Extendz ext = field.getAnnotation(Extendz.class);
+		if (ext != null) {
+			if (ext.title())
+				m.setTitle(property.getName());
 		}
 
 		// Collect enums for later use.
