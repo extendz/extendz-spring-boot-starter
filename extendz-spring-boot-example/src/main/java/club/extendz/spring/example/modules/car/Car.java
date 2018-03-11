@@ -38,6 +38,6 @@ public class Car {
 
 	private String registrationNumber;
 
-	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "car")
 	private Employee user;
 }

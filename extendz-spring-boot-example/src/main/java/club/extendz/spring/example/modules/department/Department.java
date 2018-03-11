@@ -18,6 +18,7 @@ package club.extendz.spring.example.modules.department;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,6 +28,7 @@ import javax.persistence.OneToMany;
 
 import club.extendz.spring.example.modules.employee.Employee;
 import club.extendz.spring.example.modules.project.Project;
+import club.extendz.spring.modelMeta.annotations.Extendz;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,6 +41,8 @@ public class Department {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Extendz(title = true)
+	@Column(nullable = false, unique = true)
 	private String name;
 
 	@OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)

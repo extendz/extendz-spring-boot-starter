@@ -45,7 +45,7 @@ public class Property {
 	private Boolean iggnoreOnRead;
 	private Boolean iggnoreOnUpdate;
 
-	private String relation;
+	private RelationShipType relationShipType;
 	private String reference;
 
 }// End class
