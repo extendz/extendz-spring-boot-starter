@@ -18,6 +18,7 @@ package club.extendz.spring.example.modules.hr.transaction.employeeTrainig;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import club.extendz.spring.example.modules.hr.master.location.Location;
+import club.extendz.spring.example.modules.car.Car;
+import club.extendz.spring.example.modules.department.Department;
+import club.extendz.spring.example.modules.project.Project;
+import club.extendz.spring.modelMeta.annotations.Extendz;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,15 +45,13 @@ public class EmployeeTaining {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long voucherNumber;
-	@Temporal(TemporalType.DATE)
-	private Date date;
-	private String descriptonOfTraining;
-	@Temporal(TemporalType.DATE)
-	private Date fromDate;
-	@Temporal(TemporalType.DATE)
-	private Date toDate;
-	private Float durationInHours;
+
+	@Extendz(title = true)
+	@Column(nullable = false, unique = true)
+	private String name;
+
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private Car car;
 
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Location location;

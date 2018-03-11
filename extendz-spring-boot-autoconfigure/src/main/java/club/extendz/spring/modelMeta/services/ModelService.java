@@ -48,6 +48,7 @@ import club.extendz.spring.modelMeta.annotations.enums.InputType;
 import club.extendz.spring.modelMeta.models.utils.Model;
 import club.extendz.spring.modelMeta.models.utils.Projection;
 import club.extendz.spring.modelMeta.models.utils.Property;
+import club.extendz.spring.modelMeta.models.utils.RelationShipType;
 import lombok.extern.slf4j.Slf4j;
 
 /***
@@ -62,17 +63,15 @@ public class ModelService {
 
 	private RepositoryRestMvcConfiguration restMvcConfiguration;
 
-	private String basePath;
-
 	/***
-	 * Holds all the model related data. Key contains the model name and value is
-	 * the object.
+	 * Holds all the model related data. Key contains the model name and value
+	 * is the object.
 	 */
 	private static Map<String, Model> modelsMap = new HashMap<>();
 
 	/***
-	 * Basic representation of the model.Contains the name and url.This can be used
-	 * with extendz-angular-root.
+	 * Basic representation of the model.Contains the name and url.This can be
+	 * used with extendz-angular-root.
 	 */
 	private static List<Model> basicModelsMap = new ArrayList<>();
 
@@ -80,7 +79,6 @@ public class ModelService {
 
 	public ModelService(RepositoryRestMvcConfiguration restMvcConfiguration) {
 		this.restMvcConfiguration = restMvcConfiguration;
-		this.basePath = this.restMvcConfiguration.config().getBasePath().toString();
 	}
 
 	@PostConstruct
@@ -156,7 +154,7 @@ public class ModelService {
 			else
 				model.setProjection(model.getProperties());
 		}
-		model.setProjections(null);
+		// model.setProjections(null);
 		return model;
 	}
 
@@ -217,7 +215,6 @@ public class ModelService {
 			// Not annotated fields
 			if (field.getAnnotations().length == 0) {
 				String className = parameterizedType1.getActualTypeArguments()[0].getTypeName();
-				property.setRelation("onetomany");
 
 				switch (field.getType().getSimpleName()) {
 				case "Map":
@@ -231,7 +228,6 @@ public class ModelService {
 					}
 					property.setKey(key);
 					property.setReference(reference);
-
 					break;
 				case "List":
 					try {
@@ -243,11 +239,6 @@ public class ModelService {
 				}
 				// Map
 				property.setType(field.getType().getSimpleName().toLowerCase());
-				property.setRelation("onetomany");
-				/*
-				 * try { property.setReference(Class.forName(className).getSimpleName( )); }
-				 * catch (ClassNotFoundException e) { log.info(e.getMessage()); }
-				 */
 			}
 		} catch (Exception e) {
 			// TODO handle exeception.
@@ -281,19 +272,19 @@ public class ModelService {
 		OneToOne oneToOne = field.getAnnotation(OneToOne.class);
 		if (oneToOne != null) {
 			property.setType(Object.class.getSimpleName().toLowerCase());
-			property.setRelation(OneToOne.class.getSimpleName().toLowerCase());
+			property.setRelationShipType(RelationShipType.SINGLE);
 		}
 
 		ManyToOne manyToOne = field.getAnnotation(ManyToOne.class);
 		if (manyToOne != null) {
 			property.setType(Object.class.getSimpleName().toLowerCase());
-			property.setRelation(ManyToOne.class.getSimpleName().toLowerCase());
+			property.setRelationShipType(RelationShipType.SINGLE);
 			property.setReference(field.getType().getSimpleName());
 		}
 
 		OneToMany oneToMany = field.getAnnotation(OneToMany.class);
 		if (oneToMany != null) {
-			property.setRelation(OneToMany.class.getSimpleName().toLowerCase());
+			property.setRelationShipType(RelationShipType.MULTIPLE);
 			property.setType(field.getType().getSimpleName().toLowerCase());
 			ParameterizedType parameterizedType = (ParameterizedType) field.getGenericType();
 			String className = parameterizedType.getActualTypeArguments()[0].getTypeName();
@@ -307,7 +298,7 @@ public class ModelService {
 
 		ManyToMany manyToMany = field.getAnnotation(ManyToMany.class);
 		if (manyToMany != null) {
-			property.setRelation(ManyToMany.class.getSimpleName().toLowerCase());
+			property.setRelationShipType(RelationShipType.MULTIPLE);
 			property.setType(field.getType().getSimpleName().toLowerCase());
 			ParameterizedType parameterizedType = (ParameterizedType) field.getGenericType();
 			String className = parameterizedType.getActualTypeArguments()[0].getTypeName();
@@ -329,7 +320,7 @@ public class ModelService {
 		// Collect enums for later use.
 		if (field.getAnnotation(Enumerated.class) != null) {
 			enumsMap.put(field.getType().getCanonicalName(), field);
-			property.setRelation(Enum.class.getSimpleName().toLowerCase());
+			property.setRelationShipType(RelationShipType.ENUM);
 			property.setType(field.getType().getSimpleName().toLowerCase());
 			property.setReference(field.getType().getSimpleName());
 		}

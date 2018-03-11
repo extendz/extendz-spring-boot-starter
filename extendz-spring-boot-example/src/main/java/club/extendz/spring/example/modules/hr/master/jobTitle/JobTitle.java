@@ -17,11 +17,16 @@ package club.extendz.spring.example.modules.hr.master.jobTitle;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import club.extendz.spring.example.modules.employee.Employee;
+import club.extendz.spring.example.modules.project.Project;
+import club.extendz.spring.modelMeta.annotations.Extendz;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,9 +41,7 @@ public class JobTitle {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String description;
-	
-	private Date date;
-	
+	@Extendz(title = true)
+	@Column(nullable = false, unique = true)
 	private String name;
 }

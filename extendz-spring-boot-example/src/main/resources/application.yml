@@ -1,0 +1,13 @@
+logging:
+  level:
+    org.springframework: info
+spring:
+  data:
+    rest:
+      base-path: /api
+  h2:
+    console:
+      enabled: true
+      
+extendz:
+  model-meta-endpoint: ${spring.data.rest.base-path}/models

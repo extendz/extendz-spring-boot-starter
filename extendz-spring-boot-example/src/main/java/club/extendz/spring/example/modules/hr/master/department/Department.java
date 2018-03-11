@@ -41,4 +41,6 @@ public class Department {
 	
 	private String email;
 
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "car")
+	private Employee user;
 }
