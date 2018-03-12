@@ -21,9 +21,12 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.Column;
@@ -69,11 +72,18 @@ public class ModelService {
 	 */
 	private static Map<String, Model> modelsMap = new HashMap<>();
 
+	private static Comparator<Model> byName = new Comparator<Model>() {
+		@Override
+		public int compare(Model o1, Model o2) {
+			return o1.getName().compareTo(o2.getName());
+		}
+	};
+
 	/***
 	 * Basic representation of the model.Contains the name and url.This can be
 	 * used with extendz-angular-root.
 	 */
-	private static List<Model> basicModelsMap = new ArrayList<>();
+	private static Set<Model> basicModelsMap = new TreeSet<>(byName);
 
 	private static HashMap<String, Field> enumsMap = new HashMap<>();
 
@@ -91,7 +101,7 @@ public class ModelService {
 			String domainClassName = domainType.getSimpleName();
 
 			String url = resourceMapping.getPath().toString();
-			
+
 			String name = WordUtils.uncapitalize(domainClassName);
 			Model model = new Model(name, url);
 			basicModelsMap.add(SerializationUtils.clone(model));
@@ -137,7 +147,7 @@ public class ModelService {
 		return projections;
 	} // addProjection()
 
-	public List<Model> getAllModelMeta() {
+	public Set<Model> getAllModelMeta() {
 		return basicModelsMap;
 	}// getAllModelMeta()
 

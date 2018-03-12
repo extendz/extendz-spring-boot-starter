@@ -38,9 +38,7 @@ public class Department {
 
 	@Column(unique = true, nullable = false)
 	private String name;
-	
+
 	private String email;
 
-	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "car")
-	private Employee user;
 }

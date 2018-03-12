@@ -15,17 +15,14 @@
  */
 package club.extendz.spring.example.modules.hr.master.jobTitle;
 
-import java.util.Date;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
-import club.extendz.spring.example.modules.employee.Employee;
-import club.extendz.spring.example.modules.project.Project;
+import club.extendz.spring.example.modules.hr.master.employee.Employee;
 import club.extendz.spring.modelMeta.annotations.Extendz;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,4 +41,7 @@ public class JobTitle {
 	@Extendz(title = true)
 	@Column(nullable = false, unique = true)
 	private String name;
+
+	@OneToOne
+	private Employee employee;
 }

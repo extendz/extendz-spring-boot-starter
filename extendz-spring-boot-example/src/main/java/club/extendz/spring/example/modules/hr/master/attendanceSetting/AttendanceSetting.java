@@ -28,27 +28,40 @@ import lombok.Setter;
 
 /***
  * @author Asitha Niranjan (asitha93@live.com)
+ * @author Randika Hapugoda
  */
 @Entity
 @Getter
 @Setter
 public class AttendanceSetting {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	// attendance type field
+
 	@Enumerated(EnumType.STRING)
 	private PayType payType;
+
 	private Boolean overtimeEligible;
+
 	private Float normalHoursPerDay;
+
 	private Float maximumHoursPerday;
+
 	private Float normalOvertimeRate;
+
 	private Float holidayOvertimeRate;
+
 	private Float specialOvertimeRate;
+
 	private Float maximumOvertimeAmount;
+
 	private Float optimumRateMultiplier;
+
 	private Float optimumRateDivisor;
+
 	private Float overtimeRateMultiplier;
+
 	private Float overtimeRateDivisor;
 
 }
