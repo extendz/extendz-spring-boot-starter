@@ -330,9 +330,15 @@ public class ModelService {
 		// Collect enums for later use.
 		if (field.getAnnotation(Enumerated.class) != null) {
 			enumsMap.put(field.getType().getCanonicalName(), field);
+			property.setType("enum");
 			property.setRelationShipType(RelationShipType.ENUM);
-			property.setType(field.getType().getSimpleName().toLowerCase());
-			property.setReference(field.getType().getSimpleName());
+			String[] enumList = new String[field.getType().getEnumConstants().length];
+			for (int i = 0; i < field.getType().getEnumConstants().length; i++) {
+				enumList[i] = field.getType().getEnumConstants()[i].toString();
+			}
+			property.setEnums(enumList);
+			//property.setType(field.getType().getSimpleName().toLowerCase());
+			//property.setReference(field.getType().getSimpleName());
 		}
 
 		return property;
