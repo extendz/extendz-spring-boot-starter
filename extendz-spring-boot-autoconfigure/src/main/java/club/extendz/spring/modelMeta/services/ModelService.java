@@ -67,8 +67,8 @@ public class ModelService {
 	private RepositoryRestMvcConfiguration restMvcConfiguration;
 
 	/***
-	 * Holds all the model related data. Key contains the model name and value
-	 * is the object.
+	 * Holds all the model related data. Key contains the model name and value is
+	 * the object.
 	 */
 	private static Map<String, Model> modelsMap = new HashMap<>();
 
@@ -80,8 +80,8 @@ public class ModelService {
 	};
 
 	/***
-	 * Basic representation of the model.Contains the name and url.This can be
-	 * used with extendz-angular-root.
+	 * Basic representation of the model.Contains the name and url.This can be used
+	 * with extendz-angular-root.
 	 */
 	private static Set<Model> basicModelsMap = new TreeSet<>(byName);
 
@@ -325,6 +325,8 @@ public class ModelService {
 		if (ext != null) {
 			if (ext.title())
 				m.setTitle(property.getName());
+			if (ext.type() != InputType.NONE)
+				property.setType(ext.type().toString());
 		}
 
 		// Collect enums for later use.
@@ -337,8 +339,8 @@ public class ModelService {
 				enumList[i] = field.getType().getEnumConstants()[i].toString();
 			}
 			property.setEnums(enumList);
-			//property.setType(field.getType().getSimpleName().toLowerCase());
-			//property.setReference(field.getType().getSimpleName());
+			// property.setType(field.getType().getSimpleName().toLowerCase());
+			// property.setReference(field.getType().getSimpleName());
 		}
 
 		return property;

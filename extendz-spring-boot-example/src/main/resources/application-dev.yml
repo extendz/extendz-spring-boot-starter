@@ -17,7 +17,7 @@ spring:
       test-on-borrow: true
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate: dialect:org.hibernate.dialect.MySQL5Dialect
 extendz:

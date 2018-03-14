@@ -15,17 +15,28 @@
  */
 package club.extendz.spring.example.modules.hr.master.department;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
+import org.hibernate.validator.constraints.Email;
+
+import club.extendz.spring.example.modules.hr.master.employee.Employee;
+import club.extendz.spring.modelMeta.annotations.Extendz;
 import lombok.Getter;
 import lombok.Setter;
 
 /***
+ * 
+ * 
  * @author Asitha Niranjan (asitha93@live.com)
+ * @author Randika Hapugoda
  */
 @Entity
 @Getter
@@ -36,9 +47,17 @@ public class Department {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Extendz(title = true)
 	@Column(unique = true, nullable = false)
 	private String name;
 
+	@Email
 	private String email;
 
-}
+	@OneToOne
+	private Employee manager;
+
+	@ManyToMany
+	private Set<Employee> employees;
+
+}// class

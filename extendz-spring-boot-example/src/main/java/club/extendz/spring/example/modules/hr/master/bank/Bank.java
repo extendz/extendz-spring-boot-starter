@@ -31,9 +31,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Bank {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@NotNull
 	private String name;
 }
