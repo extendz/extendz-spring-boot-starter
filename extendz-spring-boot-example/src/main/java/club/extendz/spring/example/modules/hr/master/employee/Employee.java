@@ -16,8 +16,11 @@
 package club.extendz.spring.example.modules.hr.master.employee;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -26,7 +29,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import club.extendz.spring.example.modules.hr.master.enums.BloodGroup;
 import club.extendz.spring.example.modules.hr.master.enums.Gender;
@@ -79,9 +81,13 @@ public class Employee {
 	// IBAN
 	private String bankName;
 
-	@Transient
 	@Extendz(type = InputType.FILE)
 	private String profileImage;
+
+	@ElementCollection
+	@CollectionTable(name = "id_images")
+	@Extendz(type = InputType.FILE)
+	private List<String> idImages;
 
 	// beneficiary information
 	private String address;

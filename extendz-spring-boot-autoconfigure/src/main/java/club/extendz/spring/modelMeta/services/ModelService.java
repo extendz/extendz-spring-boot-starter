@@ -67,8 +67,8 @@ public class ModelService {
 	private RepositoryRestMvcConfiguration restMvcConfiguration;
 
 	/***
-	 * Holds all the model related data. Key contains the model name and value is
-	 * the object.
+	 * Holds all the model related data. Key contains the model name and value
+	 * is the object.
 	 */
 	private static Map<String, Model> modelsMap = new HashMap<>();
 
@@ -80,8 +80,8 @@ public class ModelService {
 	};
 
 	/***
-	 * Basic representation of the model.Contains the name and url.This can be used
-	 * with extendz-angular-root.
+	 * Basic representation of the model.Contains the name and url.This can be
+	 * used with extendz-angular-root.
 	 */
 	private static Set<Model> basicModelsMap = new TreeSet<>(byName);
 
@@ -222,10 +222,10 @@ public class ModelService {
 		// default types
 		try {
 			ParameterizedType parameterizedType1 = (ParameterizedType) field.getGenericType();
+
 			// Not annotated fields
 			if (field.getAnnotations().length == 0) {
 				String className = parameterizedType1.getActualTypeArguments()[0].getTypeName();
-
 				switch (field.getType().getSimpleName()) {
 				case "Map":
 					String key = null;
@@ -238,10 +238,12 @@ public class ModelService {
 					}
 					property.setKey(key);
 					property.setReference(reference);
+					
 					break;
 				case "List":
 					try {
 						property.setReference(Class.forName(className).getSimpleName());
+						property.setRelationShipType(RelationShipType.MULTIPLE);
 					} catch (ClassNotFoundException e) {
 						e.printStackTrace();
 					}
@@ -249,6 +251,10 @@ public class ModelService {
 				}
 				// Map
 				property.setType(field.getType().getSimpleName().toLowerCase());
+
+			} else {
+				// This is used to detect the file upload single or mutiple based on annotaion.
+				property.setRelationShipType(RelationShipType.MULTIPLE);
 			}
 		} catch (Exception e) {
 			// TODO handle exeception.
