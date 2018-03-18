@@ -44,7 +44,6 @@ public class LocalFileSaver {
 	} // getParentFile()
 
 	public Iterator<String> save(HttpServletRequest request, MultipartFile[] multipartFiles) {
-		System.err.println(multipartFiles.length);
 		File parentDir = this.getParentFile(request);
 		Set<File> savedFiles = fileConverterService.multipartToFile(parentDir, multipartFiles);
 		return savedFiles.stream().map(file -> file.getName()).collect(Collectors.toCollection(LinkedList::new)).descendingIterator();
