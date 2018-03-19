@@ -67,8 +67,8 @@ public class ModelService {
 	private RepositoryRestMvcConfiguration restMvcConfiguration;
 
 	/***
-	 * Holds all the model related data. Key contains the model name and value
-	 * is the object.
+	 * Holds all the model related data. Key contains the model name and value is
+	 * the object.
 	 */
 	private static Map<String, Model> modelsMap = new HashMap<>();
 
@@ -80,8 +80,8 @@ public class ModelService {
 	};
 
 	/***
-	 * Basic representation of the model.Contains the name and url.This can be
-	 * used with extendz-angular-root.
+	 * Basic representation of the model.Contains the name and url.This can be used
+	 * with extendz-angular-root.
 	 */
 	private static Set<Model> basicModelsMap = new TreeSet<>(byName);
 
@@ -114,6 +114,7 @@ public class ModelService {
 					.getProjectionsFor(resourceMapping.getDomainType());
 
 			model.setProjections(this.getProjection(projections, model));
+			// System.err.println(model.getProjections().size());
 			modelsMap.put(domainClassName.toLowerCase(), model);
 		});
 
@@ -156,17 +157,15 @@ public class ModelService {
 	}
 
 	public Model getModelByName(String name, String projectionName) {
-		Model model = modelsMap.get(name);
+		Model model = SerializationUtils.clone(modelsMap.get(name));
 		if (projectionName != null) {
 			Projection projection = model.getProjections().get(projectionName);
 			if (projection != null)
-				model.setProjection(projection.getProperties());
-			else
-				model.setProjection(model.getProperties());
+				model.setProperties(projection.getProperties());
 		}
 		// model.setProjections(null);
 		return model;
-	}
+	}// getModelByName()
 
 	public List<Property> getProperties(Class<?> entityClass, Model m) {
 		List<Property> properties = new ArrayList<Property>();
@@ -238,7 +237,7 @@ public class ModelService {
 					}
 					property.setKey(key);
 					property.setReference(reference);
-					
+
 					break;
 				case "List":
 					try {

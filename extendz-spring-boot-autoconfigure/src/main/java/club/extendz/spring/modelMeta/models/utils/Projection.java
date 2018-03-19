@@ -15,6 +15,7 @@
  */
 package club.extendz.spring.modelMeta.models.utils;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -26,7 +27,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude(value = Include.NON_NULL)
-public class Projection {
+public class Projection implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5751907940127120099L;
 	
 	private List<Property> properties;
 

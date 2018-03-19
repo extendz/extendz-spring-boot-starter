@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -57,6 +58,7 @@ public class Model implements Serializable {
 
 	private List<Property> projection;
 
+	@JsonIgnore
 	private Map<String, Projection> projections;
 
 	public Model(String name, String url) {
