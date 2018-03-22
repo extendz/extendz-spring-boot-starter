@@ -66,6 +66,8 @@ public class ModelService {
 
 	private RepositoryRestMvcConfiguration restMvcConfiguration;
 
+	private SourceCodeGenerationService sourceCodeGenerationService;
+
 	/***
 	 * Holds all the model related data. Key contains the model name and value is
 	 * the object.
@@ -87,8 +89,10 @@ public class ModelService {
 
 	private static HashMap<String, Field> enumsMap = new HashMap<>();
 
-	public ModelService(RepositoryRestMvcConfiguration restMvcConfiguration) {
+	public ModelService(RepositoryRestMvcConfiguration restMvcConfiguration,
+			SourceCodeGenerationService sourceCodeGenerationService) {
 		this.restMvcConfiguration = restMvcConfiguration;
+		this.sourceCodeGenerationService = sourceCodeGenerationService;
 	}
 
 	@PostConstruct
@@ -99,6 +103,7 @@ public class ModelService {
 		restMvcConfiguration.resourceMappings().forEach(resourceMapping -> {
 			Class<?> domainType = resourceMapping.getDomainType();
 			String domainClassName = domainType.getSimpleName();
+			sourceCodeGenerationService.gerateControllers(domainType);
 
 			String url = resourceMapping.getPath().toString();
 
