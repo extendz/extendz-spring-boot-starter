@@ -21,6 +21,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.envers.Audited;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,12 +32,14 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Audited
 public class Bank {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotNull
 	private String name;
-}
+
+}// class

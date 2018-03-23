@@ -26,6 +26,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
+import org.hibernate.envers.Audited;
+
 import club.extendz.spring.example.modules.hr.master.enums.Day;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,6 +38,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Audited
 public class LeaveSetting {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

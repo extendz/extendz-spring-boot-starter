@@ -27,6 +27,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.envers.Audited;
+
 import club.extendz.spring.example.modules.hr.master.payCategory.PayCategory;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +39,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Audited
 public class Payroll {
 
 	@Id

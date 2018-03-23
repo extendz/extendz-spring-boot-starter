@@ -22,6 +22,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.envers.Audited;
+
 import club.extendz.spring.example.modules.hr.master.attendanceSetting.enums.PayType;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +35,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Audited
 public class AttendanceSetting {
 
 	@Id

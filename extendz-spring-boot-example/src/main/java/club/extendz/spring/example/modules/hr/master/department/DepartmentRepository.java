@@ -19,6 +19,7 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.history.RevisionRepository;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.dsl.StringPath;
@@ -26,11 +27,14 @@ import com.querydsl.core.types.dsl.StringPath;
 /***
  * @author Asitha Niranjan (asitha93@live.com)
  */
+//
 @Repository
 public interface DepartmentRepository extends PagingAndSortingRepository<Department, Long>,
 		QueryDslPredicateExecutor<Department>, QuerydslBinderCustomizer<QDepartment> {
+
 	@Override
 	default void customize(QuerydslBindings bindings, QDepartment department) {
 		bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
-	}
-}
+	}// customize()
+
+}// class

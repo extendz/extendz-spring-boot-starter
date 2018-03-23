@@ -41,6 +41,7 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.text.WordUtils;
+import org.hibernate.envers.Audited;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 import org.springframework.stereotype.Service;
 
@@ -103,12 +104,14 @@ public class ModelService {
 		restMvcConfiguration.resourceMappings().forEach(resourceMapping -> {
 			Class<?> domainType = resourceMapping.getDomainType();
 			String domainClassName = domainType.getSimpleName();
-			sourceCodeGenerationService.gerateControllers(domainType);
 
 			String url = resourceMapping.getPath().toString();
 
 			String name = WordUtils.uncapitalize(domainClassName);
 			Model model = new Model(name, url);
+
+			//this.generateAuditing(domainType, model);
+
 			basicModelsMap.add(SerializationUtils.clone(model));
 
 			// add Properties
@@ -124,6 +127,13 @@ public class ModelService {
 		});
 
 	}// onPostConstruct()
+
+	private void generateAuditing(Class<?> domainType, Model model) {
+		Audited audited = domainType.getAnnotation(Audited.class);
+		if (audited != null) {
+			this.sourceCodeGenerationService.generateAuditingClasses(domainType, model);
+		}
+	}// generateAuditing()
 
 	private HashMap<String, Projection> getProjection(Map<String, Class<?>> projectionsMap, Model model) {
 		HashMap<String, Projection> projections = new HashMap<String, Projection>();

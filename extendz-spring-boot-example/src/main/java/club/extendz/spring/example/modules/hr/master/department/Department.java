@@ -15,6 +15,7 @@
  */
 package club.extendz.spring.example.modules.hr.master.department;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -25,6 +26,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import org.hibernate.validator.constraints.Email;
 
 import club.extendz.spring.example.modules.hr.master.employee.Employee;
@@ -41,7 +44,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Department {
+@Audited
+public class Department implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -625725310374841893L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,10 +63,12 @@ public class Department {
 	@Email
 	private String email;
 
-	@OneToOne
-	private Employee manager;
-
-	@ManyToMany
-	private Set<Employee> employees;
+//	@OneToOne
+//	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+//	private Employee manager;
+//
+//	@ManyToMany
+//	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+//	private Set<Employee> employees;
 
 }// class

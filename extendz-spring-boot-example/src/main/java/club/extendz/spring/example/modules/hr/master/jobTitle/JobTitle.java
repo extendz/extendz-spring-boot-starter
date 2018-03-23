@@ -22,6 +22,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.hibernate.envers.Audited;
+
 import club.extendz.spring.example.modules.hr.master.employee.Employee;
 import club.extendz.spring.modelMeta.annotations.Extendz;
 import lombok.Getter;
@@ -33,6 +35,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Audited
 public class JobTitle {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

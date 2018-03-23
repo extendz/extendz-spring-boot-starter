@@ -1,6 +1,7 @@
 logging:
   level:
-    org.springframework: info
+    org.springframework: false
+    org.hibernate: false
 spring:
   profiles:
     active:

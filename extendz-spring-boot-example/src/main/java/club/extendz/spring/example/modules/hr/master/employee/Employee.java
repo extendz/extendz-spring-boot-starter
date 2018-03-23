@@ -30,6 +30,8 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.envers.Audited;
+
 import club.extendz.spring.example.modules.hr.master.enums.BloodGroup;
 import club.extendz.spring.example.modules.hr.master.enums.Gender;
 import club.extendz.spring.modelMeta.annotations.Extendz;
@@ -44,6 +46,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Audited
 public class Employee {
 
 	@Id
