@@ -34,4 +34,6 @@ public class ExtendzProperties {
 	private boolean enabled = true;
 
 	public String modelMetaEndpoint;
+
+	public String localDataDir;
 }

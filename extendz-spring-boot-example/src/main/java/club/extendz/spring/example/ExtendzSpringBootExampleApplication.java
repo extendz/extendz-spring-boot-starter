@@ -18,15 +18,28 @@ package club.extendz.spring.example;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import club.extendz.spring.example.modules.utils.ProfileUtils;
+
 @SpringBootApplication(scanBasePackages = "club.extendz")
+@EnableJpaAuditing
+@EnableJpaRepositories(basePackages = "club.extendz.spring.example.modules.hr.master.department")
 public class ExtendzSpringBootExampleApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ExtendzSpringBootExampleApplication.class, args);
+		// SpringApplication.run(ExtendzSpringBootExampleApplication.class,
+		// args);
+		SpringApplication app = new SpringApplication(ExtendzSpringBootExampleApplication.class);
+		// Change the default profile to "dev" instead of "default".
+		ProfileUtils.setAsDev(app);
+		app.run(args);
+
 	}
 
 	@Bean
@@ -34,7 +47,8 @@ public class ExtendzSpringBootExampleApplication {
 		return new WebMvcConfigurerAdapter() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/api/**").allowedOrigins("https://extendz.github.io", "http://localhost:4200");
+				registry.addMapping("/api/**").allowedOrigins("https://extendz.github.io", "http://localhost:4200")
+						.allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS").allowedHeaders("*");
 			}
 		};
 	} // corsConfigurer

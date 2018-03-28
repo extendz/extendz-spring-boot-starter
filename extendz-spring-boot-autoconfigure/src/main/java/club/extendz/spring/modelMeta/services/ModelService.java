@@ -21,9 +21,12 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.Column;
@@ -37,6 +40,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.SerializationUtils;
+import org.apache.commons.lang3.text.WordUtils;
+import org.hibernate.envers.Audited;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 import org.springframework.stereotype.Service;
 
@@ -62,22 +67,33 @@ public class ModelService {
 
 	private RepositoryRestMvcConfiguration restMvcConfiguration;
 
+	private SourceCodeGenerationService sourceCodeGenerationService;
+
 	/***
-	 * Holds all the model related data. Key contains the model name and value
-	 * is the object.
+	 * Holds all the model related data. Key contains the model name and value is
+	 * the object.
 	 */
 	private static Map<String, Model> modelsMap = new HashMap<>();
 
+	private static Comparator<Model> byName = new Comparator<Model>() {
+		@Override
+		public int compare(Model o1, Model o2) {
+			return o1.getName().compareTo(o2.getName());
+		}
+	};
+
 	/***
-	 * Basic representation of the model.Contains the name and url.This can be
-	 * used with extendz-angular-root.
+	 * Basic representation of the model.Contains the name and url.This can be used
+	 * with extendz-angular-root.
 	 */
-	private static List<Model> basicModelsMap = new ArrayList<>();
+	private static Set<Model> basicModelsMap = new TreeSet<>(byName);
 
 	private static HashMap<String, Field> enumsMap = new HashMap<>();
 
-	public ModelService(RepositoryRestMvcConfiguration restMvcConfiguration) {
+	public ModelService(RepositoryRestMvcConfiguration restMvcConfiguration,
+			SourceCodeGenerationService sourceCodeGenerationService) {
 		this.restMvcConfiguration = restMvcConfiguration;
+		this.sourceCodeGenerationService = sourceCodeGenerationService;
 	}
 
 	@PostConstruct
@@ -90,7 +106,12 @@ public class ModelService {
 			String domainClassName = domainType.getSimpleName();
 
 			String url = resourceMapping.getPath().toString();
-			Model model = new Model(domainClassName.toLowerCase(), url);
+
+			String name = WordUtils.uncapitalize(domainClassName);
+			Model model = new Model(name, url);
+
+			//this.generateAuditing(domainType, model);
+
 			basicModelsMap.add(SerializationUtils.clone(model));
 
 			// add Properties
@@ -101,10 +122,18 @@ public class ModelService {
 					.getProjectionsFor(resourceMapping.getDomainType());
 
 			model.setProjections(this.getProjection(projections, model));
+			// System.err.println(model.getProjections().size());
 			modelsMap.put(domainClassName.toLowerCase(), model);
 		});
 
 	}// onPostConstruct()
+
+	private void generateAuditing(Class<?> domainType, Model model) {
+		Audited audited = domainType.getAnnotation(Audited.class);
+		if (audited != null) {
+			this.sourceCodeGenerationService.generateAuditingClasses(domainType, model);
+		}
+	}// generateAuditing()
 
 	private HashMap<String, Projection> getProjection(Map<String, Class<?>> projectionsMap, Model model) {
 		HashMap<String, Projection> projections = new HashMap<String, Projection>();
@@ -134,7 +163,7 @@ public class ModelService {
 		return projections;
 	} // addProjection()
 
-	public List<Model> getAllModelMeta() {
+	public Set<Model> getAllModelMeta() {
 		return basicModelsMap;
 	}// getAllModelMeta()
 
@@ -143,17 +172,15 @@ public class ModelService {
 	}
 
 	public Model getModelByName(String name, String projectionName) {
-		Model model = modelsMap.get(name);
+		Model model = SerializationUtils.clone(modelsMap.get(name));
 		if (projectionName != null) {
 			Projection projection = model.getProjections().get(projectionName);
 			if (projection != null)
-				model.setProjection(projection.getProperties());
-			else
-				model.setProjection(model.getProperties());
+				model.setProperties(projection.getProperties());
 		}
 		// model.setProjections(null);
 		return model;
-	}
+	}// getModelByName()
 
 	public List<Property> getProperties(Class<?> entityClass, Model m) {
 		List<Property> properties = new ArrayList<Property>();
@@ -209,10 +236,10 @@ public class ModelService {
 		// default types
 		try {
 			ParameterizedType parameterizedType1 = (ParameterizedType) field.getGenericType();
+
 			// Not annotated fields
 			if (field.getAnnotations().length == 0) {
 				String className = parameterizedType1.getActualTypeArguments()[0].getTypeName();
-
 				switch (field.getType().getSimpleName()) {
 				case "Map":
 					String key = null;
@@ -225,10 +252,12 @@ public class ModelService {
 					}
 					property.setKey(key);
 					property.setReference(reference);
+
 					break;
 				case "List":
 					try {
 						property.setReference(Class.forName(className).getSimpleName());
+						property.setRelationShipType(RelationShipType.MULTIPLE);
 					} catch (ClassNotFoundException e) {
 						e.printStackTrace();
 					}
@@ -236,6 +265,10 @@ public class ModelService {
 				}
 				// Map
 				property.setType(field.getType().getSimpleName().toLowerCase());
+
+			} else {
+				// This is used to detect the file upload single or mutiple based on annotaion.
+				property.setRelationShipType(RelationShipType.MULTIPLE);
 			}
 		} catch (Exception e) {
 			// TODO handle exeception.
@@ -312,14 +345,22 @@ public class ModelService {
 		if (ext != null) {
 			if (ext.title())
 				m.setTitle(property.getName());
+			if (ext.type() != InputType.NONE)
+				property.setType(ext.type().toString());
 		}
 
 		// Collect enums for later use.
 		if (field.getAnnotation(Enumerated.class) != null) {
 			enumsMap.put(field.getType().getCanonicalName(), field);
+			property.setType("enum");
 			property.setRelationShipType(RelationShipType.ENUM);
-			property.setType(field.getType().getSimpleName().toLowerCase());
-			property.setReference(field.getType().getSimpleName());
+			String[] enumList = new String[field.getType().getEnumConstants().length];
+			for (int i = 0; i < field.getType().getEnumConstants().length; i++) {
+				enumList[i] = field.getType().getEnumConstants()[i].toString();
+			}
+			property.setEnums(enumList);
+			// property.setType(field.getType().getSimpleName().toLowerCase());
+			// property.setReference(field.getType().getSimpleName());
 		}
 
 		return property;

@@ -8,6 +8,6 @@ spring:
   h2:
     console:
       enabled: true
-      
 extendz:
   model-meta-endpoint: ${spring.data.rest.base-path}/models
+  local-data-dir: data

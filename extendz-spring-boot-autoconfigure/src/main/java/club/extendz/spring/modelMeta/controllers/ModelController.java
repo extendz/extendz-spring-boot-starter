@@ -54,6 +54,12 @@ public class ModelController implements ResourceProcessor<RepositoryLinksResourc
 				.orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
 	}// getModels()
 
+	/*@GetMapping("enums")
+	public ResponseEntity<?> getEnums() {
+		return Optional.ofNullable(modelService.getEnums()).map(enums -> new ResponseEntity<>(enums, HttpStatus.OK))
+				.orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+	}*/
+
 	@RequestMapping(value = "{m}")
 	private ResponseEntity<?> getModel(@PathVariable(value = "m") String name,
 			@RequestParam(required = false, name = "projection") String projection) {

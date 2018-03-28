@@ -15,6 +15,8 @@
  */
 package club.extendz.spring.modelMeta.models.utils;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -24,8 +26,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude(value = Include.NON_NULL)
-public class Property {
+public class Property implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9043472316207121442L;
+	
 	private String name;
 	private String key;
 

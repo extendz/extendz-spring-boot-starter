@@ -1,0 +1,25 @@
+logging:
+  level:
+    org.springframework: false
+    org.hibernate: false
+spring:
+  profiles:
+    active:
+    - dev
+  data:
+    rest:
+      base-path: /api
+  datasource:
+    url: jdbc:mysql://localhost/extendz?useSSL=false
+    username: extendz
+    password: club.extendz
+    tomcat:
+      validation-query: SELECT 1
+      test-on-borrow: true
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate: dialect:org.hibernate.dialect.MySQL5Dialect
+extendz:
+  model-meta-endpoint: ${spring.data.rest.base-path}/models
