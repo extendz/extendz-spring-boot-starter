@@ -70,8 +70,8 @@ public class ModelService {
 	private SourceCodeGenerationService sourceCodeGenerationService;
 
 	/***
-	 * Holds all the model related data. Key contains the model name and value is
-	 * the object.
+	 * Holds all the model related data. Key contains the model name and value
+	 * is the object.
 	 */
 	private static Map<String, Model> modelsMap = new HashMap<>();
 
@@ -83,8 +83,8 @@ public class ModelService {
 	};
 
 	/***
-	 * Basic representation of the model.Contains the name and url.This can be used
-	 * with extendz-angular-root.
+	 * Basic representation of the model.Contains the name and url.This can be
+	 * used with extendz-angular-root.
 	 */
 	private static Set<Model> basicModelsMap = new TreeSet<>(byName);
 
@@ -110,7 +110,7 @@ public class ModelService {
 			String name = WordUtils.uncapitalize(domainClassName);
 			Model model = new Model(name, url);
 
-			//this.generateAuditing(domainType, model);
+			// this.generateAuditing(domainType, model);
 
 			basicModelsMap.add(SerializationUtils.clone(model));
 
@@ -267,7 +267,8 @@ public class ModelService {
 				property.setType(field.getType().getSimpleName().toLowerCase());
 
 			} else {
-				// This is used to detect the file upload single or mutiple based on annotaion.
+				// This is used to detect the file upload single or mutiple
+				// based on annotaion.
 				property.setRelationShipType(RelationShipType.MULTIPLE);
 			}
 		} catch (Exception e) {
@@ -316,6 +317,8 @@ public class ModelService {
 		if (oneToMany != null) {
 			property.setRelationShipType(RelationShipType.MULTIPLE);
 			property.setType(field.getType().getSimpleName().toLowerCase());
+			property.setMappedBy(oneToMany.mappedBy());
+
 			ParameterizedType parameterizedType = (ParameterizedType) field.getGenericType();
 			String className = parameterizedType.getActualTypeArguments()[0].getTypeName();
 			try {
@@ -347,6 +350,9 @@ public class ModelService {
 				m.setTitle(property.getName());
 			if (ext.type() != InputType.NONE)
 				property.setType(ext.type().toString());
+			if (!ext.mappedBySource().equals("")) {
+				property.setMappedBySource(ext.mappedBySource());
+			}
 		}
 
 		// Collect enums for later use.
