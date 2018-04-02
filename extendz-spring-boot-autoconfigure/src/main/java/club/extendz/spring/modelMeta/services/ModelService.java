@@ -95,7 +95,6 @@ public class ModelService {
 		this.restMvcConfiguration = restMvcConfiguration;
 		this.sourceCodeGenerationService = sourceCodeGenerationService;
 	}
-
 	@PostConstruct
 	public void onPostConstruct() {
 		log.info("Initializing Model Meta Export service.");
@@ -108,7 +107,7 @@ public class ModelService {
 			String url = resourceMapping.getPath().toString();
 
 			String name = WordUtils.uncapitalize(domainClassName);
-			Model model = new Model(name, url);
+			Model model = new Model(domainClassName, url);
 
 			// this.generateAuditing(domainType, model);
 
