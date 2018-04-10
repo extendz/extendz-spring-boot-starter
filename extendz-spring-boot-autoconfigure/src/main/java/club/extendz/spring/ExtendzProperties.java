@@ -35,5 +35,8 @@ public class ExtendzProperties {
 
 	public String modelMetaEndpoint;
 
+	/***
+	 * Directory to save the data 
+	 */
 	public String localDataDir;
 }
