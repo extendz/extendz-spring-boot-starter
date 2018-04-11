@@ -10,6 +10,9 @@ public interface EmployeeProjections {
 	public interface EmployeeDataTableProjection {
 
 		Date getDateOfBirth();
+
+		String getNumber();
+
 	}
 
 }
