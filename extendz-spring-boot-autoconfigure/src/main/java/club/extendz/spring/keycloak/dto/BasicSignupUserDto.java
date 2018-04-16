@@ -30,11 +30,11 @@ public class BasicSignupUserDto implements Serializable {
 		user.setEmail(this.getEmail());
 		user.setEnabled(true);
 
-		CredentialRepresentation passwordCred = new CredentialRepresentation();
-		passwordCred.setTemporary(false);
-		passwordCred.setType(CredentialRepresentation.PASSWORD);
-		passwordCred.setValue(this.getPassword());
-		user.setCredentials(Arrays.asList(passwordCred));
+		CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
+		credentialRepresentation.setTemporary(false);
+		credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
+		credentialRepresentation.setValue(this.getPassword());
+		user.setCredentials(Arrays.asList(credentialRepresentation));
 
 		return user;
 	} // getUserRepresentation()
