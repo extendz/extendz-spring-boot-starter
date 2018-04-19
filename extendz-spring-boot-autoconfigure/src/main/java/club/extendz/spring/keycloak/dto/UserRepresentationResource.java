@@ -1,6 +1,6 @@
 package club.extendz.spring.keycloak.dto;
 
-import org.keycloak.representations.account.UserRepresentation;
+import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.hateoas.Resources;
 
 import lombok.Getter;
