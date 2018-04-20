@@ -12,13 +12,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import club.extendz.spring.keycloak.dto.UserRepresentationResource;
+import club.extendz.spring.keycloak.dto.UserInfo;
+import club.extendz.spring.keycloak.exceptions.UserAlreadyExistsException;
 import club.extendz.spring.keycloak.exceptions.UserDeletionFailedException;
 import lombok.RequiredArgsConstructor;
 
@@ -31,26 +33,38 @@ public class KeycloakAdminController {
 	private final KeycloakAdminService keycloakAdminService;
 	private final UserRepresentationResourceAssembler assembler;
 
+	@PostMapping("users")
+	public ResponseEntity<?> createUser(@RequestBody UserInfo userDto) {
+		try {
+			UserInfo userRepresentation = keycloakAdminService.createUser(userDto);
+			return ResponseEntity.ok(this.assembler.toResource(userRepresentation));
+		} catch (UserAlreadyExistsException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	} // createUser()
+
 	@GetMapping("users")
-	public PagedResources<UserRepresentation> getUsers(
+	public PagedResources<UserInfo> getUsers(
 			@RequestParam(required = false, name = "userName", defaultValue = "") String userName, Pageable pageable,
 			PagedResourcesAssembler pagedAssembler) {
-		Page<UserRepresentation> allUsers = keycloakAdminService.getAllUsers(userName, pageable);
-		return pagedAssembler.toResource(allUsers, assembler);
+		Page<UserInfo> users = keycloakAdminService.getUsers(userName, pageable);
+		return pagedAssembler.toResource(users, assembler);
 	} // getUsers()
 
 	@GetMapping("users/{id}")
-	public UserRepresentationResource getUser(@PathVariable("id") String id) {
-		UserRepresentation userRepresentation = keycloakAdminService.getUser(id);
-		return this.assembler.toResource(userRepresentation);
+	public ResponseEntity<?> getUser(@PathVariable("id") String id) {
+		UserInfo userInfo = keycloakAdminService.getUser(id);
+		return ResponseEntity.ok(this.assembler.toResource(userInfo));
 	} // getUser()
 
 	@PutMapping("users/{id}")
-	public UserRepresentationResource updateUser(@RequestBody Resource<UserRepresentation> user) {
+	public ResponseEntity<?> updateUser(@RequestBody Resource<UserRepresentation> user) {
 		String href = user.getId().getHref();
 		String id = href.substring(href.lastIndexOf("/") + 1);
-		UserRepresentation userRepresentation = keycloakAdminService.putUser(id, user.getContent());
-		return this.assembler.toResource(userRepresentation);
+		UserInfo userInfo = keycloakAdminService.putUser(id, user.getContent());
+		return ResponseEntity.ok(this.assembler.toResource(userInfo));
 	}// putUser()
 
 	@DeleteMapping("users/{id}")

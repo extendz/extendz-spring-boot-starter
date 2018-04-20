@@ -1,7 +1,7 @@
 package club.extendz.spring.keycloak;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.core.Response;
 
@@ -10,7 +10,6 @@ import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UsersResource;
-import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -19,12 +18,14 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import club.extendz.spring.keycloak.dto.BasicSignupUserDto;
+import club.extendz.spring.keycloak.dto.UserInfo;
 import club.extendz.spring.keycloak.exceptions.UserAlreadyExistsException;
 import club.extendz.spring.keycloak.exceptions.UserCreationFailedException;
 import club.extendz.spring.keycloak.exceptions.UserDeletionFailedException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 @ConditionalOnProperty(prefix = "keycloak", name = "auth-server-url")
 public class KeycloakAdminService {
 
@@ -33,6 +34,7 @@ public class KeycloakAdminService {
 
 	@Value("${keycloak.auth-server-url}")
 	private String authServerUrl;
+
 
 	private Keycloak getKeyCloak() {
 		return KeycloakBuilder.builder().serverUrl(authServerUrl).realm("master").username("admin").password("admin")
@@ -48,27 +50,27 @@ public class KeycloakAdminService {
 		return getKeyCloak().realm(realm);
 	}
 
-	public Page<UserRepresentation> getAllUsers(String userName, Pageable pageable) {
+	public Page<UserInfo> getUsers(String userName, Pageable pageable) {
 		UsersResource userRessource = getKeycloakUserResource();
 		List<UserRepresentation> search = userRessource.search(userName, pageable.getPageNumber(),
 				pageable.getPageSize());
-		return new PageImpl<UserRepresentation>(search, pageable, userRessource.count());
+		List<UserInfo> userInfos = search.stream().map(rep -> new UserRepresentationDto().toUserInfo(rep))
+				.collect(Collectors.toList());
+		return new PageImpl<UserInfo>(userInfos, pageable, userInfos.size());
 	}
 
-	public void createUser(BasicSignupUserDto userDto) throws Exception {
+	public UserInfo createUser(UserInfo userInfo) throws Exception {
 		UsersResource userRessource = getKeycloakUserResource();
-		UserRepresentation user = userDto.getUserRepresentation();
-
+		UserRepresentation user = new UserRepresentationDto().getUserRepresentation(userInfo);
 		// Create user
 		Response result = userRessource.create(user);
 		int statusId = result.getStatus();
+
 		// Created status
 		if (statusId == 201) {
 			String userId = result.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
-			// set role
-			RealmResource realmResource = getRealmResource();
-			RoleRepresentation savedRoleRepresentation = realmResource.roles().get("USER").toRepresentation();
-			realmResource.users().get(userId).roles().realmLevel().add(Arrays.asList(savedRoleRepresentation));
+			userInfo.setSub(userId);
+			return userInfo;
 		} else if (statusId == 409) {
 			throw new UserAlreadyExistsException();
 		} else {
@@ -76,24 +78,27 @@ public class KeycloakAdminService {
 		}
 	}// createUser()
 
-	public UserRepresentation getUser(String id) {
+	public UserInfo getUser(String id) {
 		UsersResource userRessource = getKeycloakUserResource();
-		return userRessource.get(id).toRepresentation();
+		UserRepresentation representation = userRessource.get(id).toRepresentation();
+		return new UserRepresentationDto().toUserInfo(representation);
 	} // getUser
 
-	public void deleteUser(String id) throws UserDeletionFailedException {
+	public String deleteUser(String id) throws UserDeletionFailedException {
 		UsersResource userRessource = getKeycloakUserResource();
 		Response deleteResponse = userRessource.delete(id);
 		int statusId = deleteResponse.getStatus();
 		if (statusId != 204) {
 			throw new UserDeletionFailedException();
+		} else {
+			return id;
 		}
 	} // deleteUser()
 
-	public UserRepresentation putUser(String id, UserRepresentation userRepresentation) {
+	public UserInfo putUser(String id, UserRepresentation userRepresentation) {
 		UsersResource userRessource = getKeycloakUserResource();
 		userRessource.get(id).update(userRepresentation);
-		return userRepresentation;
+		return new UserRepresentationDto().toUserInfo(userRepresentation);
 	}// putUser()
 
 }

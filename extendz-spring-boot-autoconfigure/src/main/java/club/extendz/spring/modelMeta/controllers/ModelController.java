@@ -41,7 +41,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("${extendz.model-meta-endpoint}")
-
 public class ModelController implements ResourceProcessor<RepositoryLinksResource> {
 
 	private final ModelService modelService;

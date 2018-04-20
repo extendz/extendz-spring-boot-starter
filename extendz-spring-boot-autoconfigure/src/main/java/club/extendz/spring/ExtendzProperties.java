@@ -36,7 +36,10 @@ public class ExtendzProperties {
 	public String modelMetaEndpoint;
 
 	/***
-	 * Directory to save the data 
+	 * Directory to save the data
 	 */
 	public String localDataDir;
+
+	/*** Entity name for the maintaining the user profile */
+	public String userProfileUrl;
 }

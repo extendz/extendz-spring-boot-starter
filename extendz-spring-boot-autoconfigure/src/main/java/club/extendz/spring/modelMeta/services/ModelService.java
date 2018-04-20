@@ -53,6 +53,7 @@ import club.extendz.spring.modelMeta.models.utils.Model;
 import club.extendz.spring.modelMeta.models.utils.Projection;
 import club.extendz.spring.modelMeta.models.utils.Property;
 import club.extendz.spring.modelMeta.models.utils.RelationShipType;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /***
@@ -63,15 +64,15 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class ModelService {
 
-	private RepositoryRestMvcConfiguration restMvcConfiguration;
-
-	private SourceCodeGenerationService sourceCodeGenerationService;
+	private final RepositoryRestMvcConfiguration restMvcConfiguration;
+	private final SourceCodeGenerationService sourceCodeGenerationService;
 
 	/***
-	 * Holds all the model related data. Key contains the model name and value
-	 * is the object.
+	 * Holds all the model related data. Key contains the model name and value is
+	 * the object.
 	 */
 	private static Map<String, Model> modelsMap = new HashMap<>();
 
@@ -83,18 +84,13 @@ public class ModelService {
 	};
 
 	/***
-	 * Basic representation of the model.Contains the name and url.This can be
-	 * used with extendz-angular-root.
+	 * Basic representation of the model.Contains the name and url.This can be used
+	 * with extendz-angular-root.
 	 */
 	private static Set<Model> basicModelsMap = new TreeSet<>(byName);
 
 	private static HashMap<String, Field> enumsMap = new HashMap<>();
 
-	public ModelService(RepositoryRestMvcConfiguration restMvcConfiguration,
-			SourceCodeGenerationService sourceCodeGenerationService) {
-		this.restMvcConfiguration = restMvcConfiguration;
-		this.sourceCodeGenerationService = sourceCodeGenerationService;
-	}
 	@PostConstruct
 	public void onPostConstruct() {
 		log.info("Initializing Model Meta Export service.");
