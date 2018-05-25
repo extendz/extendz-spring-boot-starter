@@ -35,7 +35,6 @@ public class KeycloakAdminService {
 	@Value("${keycloak.auth-server-url}")
 	private String authServerUrl;
 
-
 	private Keycloak getKeyCloak() {
 		return KeycloakBuilder.builder().serverUrl(authServerUrl).realm("master").username("admin").password("admin")
 				.clientId("admin-cli").resteasyClient(new ResteasyClientBuilder().connectionPoolSize(10).build())
@@ -48,6 +47,12 @@ public class KeycloakAdminService {
 
 	private RealmResource getRealmResource() {
 		return getKeyCloak().realm(realm);
+	}
+
+	public UserInfo getUserByUserName(String userName) {
+		UsersResource userRessource = getKeycloakUserResource();
+		List<UserRepresentation> search = userRessource.search(userName);
+		return search.stream().findFirst().map(rep -> new UserRepresentationDto().toUserInfo(rep)).get();
 	}
 
 	public Page<UserInfo> getUsers(String userName, Pageable pageable) {
