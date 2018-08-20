@@ -2,6 +2,7 @@ package club.extendz.spring.modelMeta.services;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -46,10 +47,11 @@ public class LocalFileSaver {
 	public Iterator<String> save(HttpServletRequest request, MultipartFile[] multipartFiles) {
 		File parentDir = this.getParentFile(request);
 		Set<File> savedFiles = fileConverterService.multipartToFile(parentDir, multipartFiles);
-		return savedFiles.stream().map(file -> file.getName()).collect(Collectors.toCollection(LinkedList::new)).descendingIterator();
+		return savedFiles.stream().map(file -> file.getName()).collect(Collectors.toCollection(LinkedList::new))
+				.descendingIterator();
 	}// save()
 
-	public void get(String fileName, HttpServletRequest request, HttpServletResponse response) {
+	public void get(String fileName, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		File exportFile = this.getParentFile(request);
 		try {
 			ServletContext context = request.getServletContext();
@@ -71,6 +73,7 @@ public class LocalFileSaver {
 			inputStream.close();
 			outStream.close();
 		} catch (Exception e) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			log.warn(e.getMessage());
 		}
 	}// End exportFile ()

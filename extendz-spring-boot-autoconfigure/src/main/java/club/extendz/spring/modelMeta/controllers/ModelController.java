@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import club.extendz.spring.modelMeta.services.ModelService;
+import lombok.RequiredArgsConstructor;
 
 /***
  * Controller for serving model data
@@ -38,14 +39,11 @@ import club.extendz.spring.modelMeta.services.ModelService;
  *
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("${extendz.model-meta-endpoint}")
 public class ModelController implements ResourceProcessor<RepositoryLinksResource> {
 
-	private ModelService modelService;
-
-	public ModelController(ModelService modelService) {
-		this.modelService = modelService;
-	}
+	private final ModelService modelService;
 
 	@RequestMapping
 	public ResponseEntity<?> getModels() {
@@ -54,11 +52,12 @@ public class ModelController implements ResourceProcessor<RepositoryLinksResourc
 				.orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
 	}// getModels()
 
-	/*@GetMapping("enums")
-	public ResponseEntity<?> getEnums() {
-		return Optional.ofNullable(modelService.getEnums()).map(enums -> new ResponseEntity<>(enums, HttpStatus.OK))
-				.orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
-	}*/
+	/*
+	 * @GetMapping("enums") public ResponseEntity<?> getEnums() { return
+	 * Optional.ofNullable(modelService.getEnums()).map(enums -> new
+	 * ResponseEntity<>(enums, HttpStatus.OK)) .orElse(new
+	 * ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR)); }
+	 */
 
 	@RequestMapping(value = "{m}")
 	private ResponseEntity<?> getModel(@PathVariable(value = "m") String name,

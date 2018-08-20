@@ -53,6 +53,7 @@ import club.extendz.spring.modelMeta.models.utils.Model;
 import club.extendz.spring.modelMeta.models.utils.Projection;
 import club.extendz.spring.modelMeta.models.utils.Property;
 import club.extendz.spring.modelMeta.models.utils.RelationShipType;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /***
@@ -63,11 +64,11 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class ModelService {
 
-	private RepositoryRestMvcConfiguration restMvcConfiguration;
-
-	private SourceCodeGenerationService sourceCodeGenerationService;
+	private final RepositoryRestMvcConfiguration restMvcConfiguration;
+	private final SourceCodeGenerationService sourceCodeGenerationService;
 
 	/***
 	 * Holds all the model related data. Key contains the model name and value is
@@ -90,12 +91,6 @@ public class ModelService {
 
 	private static HashMap<String, Field> enumsMap = new HashMap<>();
 
-	public ModelService(RepositoryRestMvcConfiguration restMvcConfiguration,
-			SourceCodeGenerationService sourceCodeGenerationService) {
-		this.restMvcConfiguration = restMvcConfiguration;
-		this.sourceCodeGenerationService = sourceCodeGenerationService;
-	}
-
 	@PostConstruct
 	public void onPostConstruct() {
 		log.info("Initializing Model Meta Export service.");
@@ -108,9 +103,9 @@ public class ModelService {
 			String url = resourceMapping.getPath().toString();
 
 			String name = WordUtils.uncapitalize(domainClassName);
-			Model model = new Model(name, url);
+			Model model = new Model(domainClassName, url);
 
-			//this.generateAuditing(domainType, model);
+			// this.generateAuditing(domainType, model);
 
 			basicModelsMap.add(SerializationUtils.clone(model));
 
@@ -267,7 +262,8 @@ public class ModelService {
 				property.setType(field.getType().getSimpleName().toLowerCase());
 
 			} else {
-				// This is used to detect the file upload single or mutiple based on annotaion.
+				// This is used to detect the file upload single or mutiple
+				// based on annotaion.
 				property.setRelationShipType(RelationShipType.MULTIPLE);
 			}
 		} catch (Exception e) {
@@ -316,6 +312,8 @@ public class ModelService {
 		if (oneToMany != null) {
 			property.setRelationShipType(RelationShipType.MULTIPLE);
 			property.setType(field.getType().getSimpleName().toLowerCase());
+			property.setMappedBy(oneToMany.mappedBy());
+
 			ParameterizedType parameterizedType = (ParameterizedType) field.getGenericType();
 			String className = parameterizedType.getActualTypeArguments()[0].getTypeName();
 			try {
@@ -347,6 +345,9 @@ public class ModelService {
 				m.setTitle(property.getName());
 			if (ext.type() != InputType.NONE)
 				property.setType(ext.type().toString());
+			if (!ext.mappedBySource().equals("")) {
+				property.setMappedBySource(ext.mappedBySource());
+			}
 		}
 
 		// Collect enums for later use.

@@ -32,9 +32,19 @@ public class Property implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -9043472316207121442L;
-	
+
 	private String name;
 	private String key;
+	/***
+	 * The mapping name to the model
+	 */
+	private String mappedBy;
+
+	/**
+	 * Refer the data source from the same model. Define the property name for
+	 * collect info
+	 */
+	private String mappedBySource;
 
 	private Boolean required;
 

@@ -15,6 +15,8 @@ public @interface Extendz {
 
 	boolean subTitle() default false;
 
+	String mappedBySource() default "";
+
 	InputType type() default InputType.NONE;
 
 }
