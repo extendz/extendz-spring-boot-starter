@@ -57,4 +57,4 @@ public class UserRepresentationResourceAssembler extends ResourceAssemblerSuppor
 		return userInfoResource;
 	} // toResource()
 
-}
+} // class

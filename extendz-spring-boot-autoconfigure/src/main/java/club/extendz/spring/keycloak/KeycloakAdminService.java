@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-@ConditionalOnProperty(prefix = "keycloak", name = "auth-server-url")
+@ConditionalOnProperty(prefix="keycloak", name="auth-server-url")
 public class KeycloakAdminService {
 
 	@Value("${keycloak.realm}")
