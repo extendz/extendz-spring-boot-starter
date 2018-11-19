@@ -34,6 +34,8 @@ public class ExtendzProperties {
 	private boolean enabled = true;
 
 	public String modelMetaEndpoint;
+	
+	public KeycloakAdmin keycloak;
 
 	/***
 	 * Directory to save the data
