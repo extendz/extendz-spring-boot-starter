@@ -42,7 +42,7 @@ public class KeycloakAdminService {
 	private String adminPassword;
 
 	private Keycloak getKeyCloak() {
-		return KeycloakBuilder.builder().serverUrl(authServerUrl).realm("master").username(adminUserName).password(adminPassword)
+		return KeycloakBuilder.builder().serverUrl(authServerUrl).realm("master").username(adminUserName).password("ZX^c9)b5")
 				.clientId("admin-cli").resteasyClient(new ResteasyClientBuilder().connectionPoolSize(10).build())
 				.build();
 	} // getKeyCloak()
