@@ -35,14 +35,14 @@ public class KeycloakAdminService {
 	@Value("${keycloak.auth-server-url}")
 	private String authServerUrl;
 	
-	// @Value("${extendz.keycloak.admin}")
-	// private String adminUserName;
+	 @Value("${extendz.keycloak.admin}")
+	 private String adminUserName;
 	
-	// @Value("${extendz.keycloak.password}")
-	// private String adminPassword;
+	 @Value("${extendz.keycloak.password}")
+	 private String adminPassword;
 
 	private Keycloak getKeyCloak() {
-		return KeycloakBuilder.builder().serverUrl(authServerUrl).realm("master").username("admin").password("ZX^c9)b5")
+		return KeycloakBuilder.builder().serverUrl(authServerUrl).realm("master").username(adminUserName).password(adminPassword)
 				.clientId("admin-cli").resteasyClient(new ResteasyClientBuilder().connectionPoolSize(10).build())
 				.build();
 	} // getKeyCloak()
